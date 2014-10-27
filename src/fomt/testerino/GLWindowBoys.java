@@ -43,7 +43,7 @@ public class GLWindowBoys extends GLWindow {
 		});
 		
 		try {
-			grass = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/shitty_grass.png"));
+			grass = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grass1.png"));
 			dirt = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/farmDirt.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
