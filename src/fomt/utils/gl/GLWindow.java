@@ -149,6 +149,8 @@ public abstract class GLWindow {
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
         
+		glEnable(GL11.GL_TEXTURE_2D);
+		
 	}
 	
 }
