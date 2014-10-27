@@ -9,22 +9,42 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
+import fomt.base.world.World;
 import fomt.utils.gl.GLWindow;
+import fomt.base.world.TileInfo;
 
 public class GLWindowBoys extends GLWindow {
 	
-	private Texture texture;
+	private Texture grass, dirt;
+	private World world;
 	
 	public GLWindowBoys(String title, int width, int height) {
 		super(title, width, height, 8);	
-		
+	
 	}
 	
 	@Override
 	protected void postSetup() {
 	
+		world = new World("test_world", 10, 10);
+		
+		world.forEachTile(tile -> {
+			
+			int r = tile.row;
+			int c = tile.col;
+			long data = tile.data;
+			
+			if (r == 0 || r == 9 || c == 0 || c == 9) {
+				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 0));
+			} else {
+				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 1));
+			}
+			
+		});
+		
 		try {
-			texture = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/shitty_grass.png"));
+			grass = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/shitty_grass.png"));
+			dirt = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/farmDirt.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -32,7 +52,6 @@ public class GLWindowBoys extends GLWindow {
 	}
 	
 	float x, y, dx, dy;
-	float scale = 32f;
 	
 	//This comment should make changes
 	@Override
@@ -41,22 +60,33 @@ public class GLWindowBoys extends GLWindow {
 		glClear(GL_COLOR_BUFFER_BIT);
 		
 		glColor3f(1, 1, 1);
-		
-		texture.bind();
-		
+	
 		int x = 0, y = 0;
 		
 		glPushMatrix();
 		
-		glTranslatef(this.x - scale * 5 + f * dx, this.y - scale * 5 + f * dy, 0f);
+		glTranslatef(this.x - 160+ f * dx, this.y - 160 + f * dy, 0f);
 	
 		for (int i = 0; i < 10; ++i) {
 			for (int j = 0; j < 10; ++j) {
-				drawQuad(x, y, x + scale, y + scale);			
-				x += scale;
+				
+				int bgSpriteID = TileInfo.getBGSpriteID(world.getTileData(i, j));
+		
+				if (bgSpriteID == 0) {
+					grass.bind();
+				} else {
+					dirt.bind();
+				}
+				
+				drawQuad(x, y, x + 32, y + 32);			
+			
+				x += 32;
+			
 			}
-			y += scale;
+			
+			y += 32;
 			x = 0;
+		
 		}
 		
 		glPopMatrix();
@@ -85,23 +115,7 @@ public class GLWindowBoys extends GLWindow {
 		
 	@Override
 	protected void onTick() {
-			
-		int dw = Mouse.getDWheel();
-		if (dw < 0){
-			System.out.println(dw);
-			if (scale > 10) {
-				scale -= .8f;
-			} else {
-				scale = 10;
-			}
-		} else if (dw > 0) {
-			if (scale < 64) {
-				scale += .8f;
-			} else {
-				scale = 64;
-			}
-		}
-	
+				
 		if (Mouse.isButtonDown(0)) {
 		
 			int xOff = Mouse.getX() - (int)x;
