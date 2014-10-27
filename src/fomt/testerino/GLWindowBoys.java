@@ -42,6 +42,23 @@ public class GLWindowBoys extends GLWindow {
 		
 		texture.bind();
 		
+		int[][] tiles = new int[10][10];
+		
+		for (int i = 0; i < 10; ++i)
+		{
+			for (int j = 0; j < 10; ++j)
+			{
+				if (i==0 || i==9 || j==0 || j==9)
+				{
+					tiles[i][j] = 1;
+				}
+				else
+				{
+					tiles[i][j] = 0;
+				}
+			}
+		}
+		
 		int x = 0, y = 0;
 		
 		glPushMatrix();
@@ -50,6 +67,22 @@ public class GLWindowBoys extends GLWindow {
 	
 		for (int i = 0; i < 10; ++i) {
 			for (int j = 0; j < 10; ++j) {
+				if (tiles[i][j] == 0)
+				{
+					try {
+						texture = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/farmDirt.png"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if (tiles[i][j] == 1)
+				{
+					try {
+						texture = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/shitty_grass.png"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 				drawQuad(x, y, x + 32, y + 32);			
 				x += 32;
 			}
