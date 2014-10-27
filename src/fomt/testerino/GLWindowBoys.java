@@ -32,6 +32,7 @@ public class GLWindowBoys extends GLWindow {
 	}
 	
 	float x, y, dx, dy;
+	float scale = 32f;
 	
 	//This comment should make changes
 	@Override
@@ -43,51 +44,18 @@ public class GLWindowBoys extends GLWindow {
 		
 		texture.bind();
 		
-		int[][] tiles = new int[10][10];
-		
-		for (int i = 0; i < 10; ++i)
-		{
-			for (int j = 0; j < 10; ++j)
-			{
-				if (i==0 || i==9 || j==0 || j==9)
-				{
-					tiles[i][j] = 1;
-				}
-				else
-				{
-					tiles[i][j] = 0;
-				}
-			}
-		}
-		
 		int x = 0, y = 0;
 		
 		glPushMatrix();
 		
-		glTranslatef(this.x - 160+ f * dx, this.y - 160 + f * dy, 0f);
+		glTranslatef(this.x - scale * 5 + f * dx, this.y - scale * 5 + f * dy, 0f);
 	
 		for (int i = 0; i < 10; ++i) {
 			for (int j = 0; j < 10; ++j) {
-				if (tiles[i][j] == 0)
-				{
-					try {
-						texture = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/farmDirt.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-				if (tiles[i][j] == 1)
-				{
-					try {
-						texture = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/shitty_grass.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-				drawQuad(x, y, x + 32, y + 32);			
-				x += 32;
+				drawQuad(x, y, x + scale, y + scale);			
+				x += scale;
 			}
-			y += 32;
+			y += scale;
 			x = 0;
 		}
 		
@@ -117,7 +85,23 @@ public class GLWindowBoys extends GLWindow {
 		
 	@Override
 	protected void onTick() {
-				
+			
+		int dw = Mouse.getDWheel();
+		if (dw < 0){
+			System.out.println(dw);
+			if (scale > 10) {
+				scale -= .8f;
+			} else {
+				scale = 10;
+			}
+		} else if (dw > 0) {
+			if (scale < 64) {
+				scale += .8f;
+			} else {
+				scale = 64;
+			}
+		}
+	
 		if (Mouse.isButtonDown(0)) {
 		
 			int xOff = Mouse.getX() - (int)x;
