@@ -1,0 +1,5 @@
+1) create tile array
+	a) 10x10 tile array
+	b) tile data all set to basic dirt (background sprite data is 0 foreground is 0 density is 0 no meta data)
+	c) "camera" centered at [4,4]
+2) render sprites based on tile array data
