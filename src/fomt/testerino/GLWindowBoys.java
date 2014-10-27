@@ -4,6 +4,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.input.Mouse;
 
+import fomt.utils.gl.GLWindow;
+
 public class GLWindowBoys extends GLWindow {
 	
 	public GLWindowBoys(String title, int width, int height) {

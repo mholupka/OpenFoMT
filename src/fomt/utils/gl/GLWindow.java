@@ -1,4 +1,4 @@
-package fomt.testerino;
+package fomt.utils.gl;
 
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
@@ -133,21 +133,10 @@ public abstract class GLWindow {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
-	//	glShadeModel(GL_SMOOTH);
-		glEnable(GL_DEPTH_TEST);
+		GL11.glDisable(GL_DEPTH_TEST);
              
-		//glEnable(GL_CULL_FACE);
 		glCullFace(GL11.GL_NONE);
 		
-		//glEnable(GL_COLOR_MATERIAL);
-      //  glColorMaterial(GL_FRONT, GL_DIFFUSE);
-    //    org.lwjgl.BufferUtils.createFloatBuffer(4);
-        //glMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE, asFlippedFloatBuffer(new float[] { 1f, 0f, 0f, 1f } ));
-        
-		//glMaterialf(GL_FRONT, GL_SHININESS, 10f);
-        //if (GLContext.getCapabilities().GL_ARB_depth_clamp)
-        //	glEnable(ARBDepthClamp.GL_DEPTH_CLAMP);
-       
         glClearColor(0f, 0f, 0f, 1f); 
         
         GL11.glDisable(GL11.GL_DEPTH_TEST);

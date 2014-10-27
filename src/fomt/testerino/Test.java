@@ -2,6 +2,8 @@ package fomt.testerino;
 
 import org.lwjgl.LWJGLException;
 
+import fomt.utils.gl.GLWindow;
+
 public class Test {
 
 	public static void main(String[] args) {
