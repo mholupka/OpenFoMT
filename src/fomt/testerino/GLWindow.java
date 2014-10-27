@@ -2,12 +2,17 @@ package fomt.testerino;
 
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.glBlendFunc;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glCullFace;
 import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glOrtho;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
@@ -144,6 +149,16 @@ public abstract class GLWindow {
         //	glEnable(ARBDepthClamp.GL_DEPTH_CLAMP);
        
         glClearColor(0f, 0f, 0f, 1f); 
+        
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+    	
+    	glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		
+		glOrtho(0, width, height, 0, -1, 1);
+		
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
         
 	}
 	

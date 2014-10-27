@@ -2,8 +2,6 @@ package fomt.testerino;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.nio.IntBuffer;
-
 import org.lwjgl.input.Mouse;
 
 public class GLWindowBoys extends GLWindow {
@@ -15,7 +13,9 @@ public class GLWindowBoys extends GLWindow {
 	
 	@Override
 	protected void postSetup() {
-		
+	
+	
+			
 	}
 	
 	int x, y, dx, dy;
