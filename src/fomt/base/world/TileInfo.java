@@ -1,63 +1,39 @@
 package fomt.base.world;
 
 public class TileInfo {
-	
-	// --- Constructors ---
-	
-	public TileInfo(int row, int col, long data) {
-		this.row = row;
-		this.col = col;
-		this.data = data;
-	}
-	
-	public int row, col;
-	public long data;
-	
+
 	// --- Static Methods ---
 	
-	public static int getFGSpriteID(long tileData) {
+	public static final int getFGSpriteID(long tileData) {
 		return (int)tileData & FG_SPRITE_MASK_32;
 	}
 	
-	public static int getBGSpriteID(long tileData) {
+	public static final int getBGSpriteID(long tileData) {
 		return ((int)tileData & BG_SPRITE_MASK_32) >> 16;
 	}
 	
-	public static boolean isDense(long tileData) {
+	public static final boolean isDense(long tileData) {
 		return ((int)(tileData >> 32L) & DENSITY_MASK_32) != 0;
 	}
 	
-	public static int getMetaData(long tileData) {
+	public static final int getMetaData(long tileData) {
 		return (int)(tileData >> 32L) & METADATA_MASK_32;
 	}
 	
-	public static long setFGSpriteID(long tileData, int id) {
+	public static final long setFGSpriteID(long tileData, int id) {
 		return (tileData & ~FG_SPRITE_MASK) | (id & 0xFFFF);
 	}
 	
-	public static long setBGSpriteID(long tileData, int id) {
+	public static final long setBGSpriteID(long tileData, int id) {
 		return (tileData & ~BG_SPRITE_MASK) | ((id & 0xFFFF) << 16);
 	}
 	
-	public static long setDensity(long tileData, boolean flag) {
-		return (tileData & ~DENSITY_MASK) | (flag ? 0x8000000000000000L : 0L);
+	public static final long setDensity(long tileData, boolean flag) {
+		return (tileData & ~DENSITY_MASK) | (flag ? 0xE000000000000000L : 0L);
 	}
 	
-	public static long setMetaData(long tileData, int metadata) {
+	public static final long setMetaData(long tileData, int metadata) {
 		return (tileData & ~METADATA_MASK) | ((long)(metadata & METADATA_MASK_32) << 32L);
-	}
-	
-	public static void debugPrint(long tileData) {
-	
-		System.out.println("TileData(" + tileData + ") {");
-		
-		System.out.println("\tBG Sprite ID: " + getBGSpriteID(tileData));
-		System.out.println("\tFG Sprite ID: " + getFGSpriteID(tileData));
-		System.out.println("\tDensity: " + isDense(tileData));
-		System.out.println("\tMetaData: " + getMetaData(tileData));
-		
-		System.out.println("}");
-		
 	}
 	
 	// --- Static Fields ---
@@ -68,8 +44,8 @@ public class TileInfo {
 	public static final int BG_SPRITE_MASK_32 = 0xFFFF0000;
 	public static final long BG_SPRITE_MASK = 0xFFFF0000L;
 	
-	protected static final int DENSITY_MASK_32 = 0x80000000;
-	public static final long DENSITY_MASK = 0x8000000000000000L;
+	protected static final int DENSITY_MASK_32 = 0xE0000000;
+	public static final long DENSITY_MASK = 0xE000000000000000L;
 	
 	protected static final int METADATA_MASK_32 = 0x7FFFFFFF;
 	public static final long METADATA_MASK = 0x7FFFFFFF00000000L;
