@@ -112,8 +112,6 @@ public class GLWindowBoys extends GLWindow {
 		}
 		
 		glPopMatrix();
-
-		drawQuad(getWidth()/2, getHeight()/2, (getWidth()/2)+1, (getHeight()/2)+1);
 		
 		drawClock(c);
 		
