@@ -166,14 +166,39 @@ public class GameWindow extends GLWindow {
 			}
 		}
 		
-		int mx = Mouse.getX();
-		int cx = getWidth() / 2 - camera.getX();
-		int nx = cx - mx;
-		System.out.println(mx + " : " + cx + " : " + (nx / 32));
-		mouseCol = nx / 32;
+		updateMouseTile();
+		
+		while (Mouse.next()) {
+			if (Mouse.getEventButtonState())
+				continue;
+			if (Mouse.getEventButton() == 0) {
+				long data = world.getTileData(mouseRow, mouseCol);
+				data = TileInfo.setFGSpriteID(data, 11);
+				world.setTileData(mouseRow, mouseCol, data);
+			}
+		}
 		
 	}
 	
+	private void updateMouseTile() {
+		
+		int cx = getWidth() / 2 - camera.getX();
+		int nx = Mouse.getX() - cx + 16;
+		mouseCol = nx / 32;
+		if (mouseCol < 0) 
+			mouseCol = 0;
+		else if (mouseCol >= world.getWidth())
+			mouseCol = world.getWidth() - 1;
+		
+		int cy = getHeight() / 2 - camera.getY();
+		int ny = (getHeight() - Mouse.getY()) - cy + 16;
+		mouseRow = ny / 32;
+		if (mouseRow < 0)
+			mouseRow = -1;
+		else if (mouseRow >= world.getHeight())
+			mouseRow = world.getHeight() - 1;
+		
+	}
 	public void render(float f)
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
