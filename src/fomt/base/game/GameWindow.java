@@ -83,7 +83,8 @@ public class GameWindow extends GLWindow {
 			
 			if (r == 5 && c == 5)
 			{
-				data = TileInfo.setFGSpriteID(data, 11);
+				data = TileInfo.setBGSpriteID(data, 13);
+				data = TileInfo.setFGSpriteID(data, 14);
 				world.setTileData(r, c, TileInfo.setMetaData(data, 3));
 			}
 			
