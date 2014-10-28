@@ -123,8 +123,12 @@ public class GameWindow extends GLWindow {
 			gameSprites.addSprite(new Sprite(13, tex));
 			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/seeds.png"));
 			gameSprites.addSprite(new Sprite(14, tex));
-			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/sprout.png"));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/flowerSprout.png"));
 			gameSprites.addSprite(new Sprite(15, tex));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/pinkCatGrassSprout2.png"));
+			gameSprites.addSprite(new Sprite(16, tex));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/pinkCatGrass.png"));
+			gameSprites.addSprite(new Sprite(17, tex));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
