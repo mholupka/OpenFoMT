@@ -20,6 +20,10 @@ public class SpriteTable {
 		return sprites.get(id);
 	}
 	
+	public int size() {
+		 return sprites.size();
+	}
+	
 	// --- Instance Fields ---
 	ArrayList<Sprite> sprites;
 	

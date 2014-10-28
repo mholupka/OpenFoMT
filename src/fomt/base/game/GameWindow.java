@@ -18,6 +18,7 @@ import fomt.base.sprite.Sprite;
 import fomt.base.sprite.SpriteTable;
 import fomt.base.tile.TileInfo;
 import fomt.base.world.World;
+import fomt.utils.gl.GLRenderer;
 import fomt.utils.gl.GLWindow;
 import fomt.utils.gl.ICamera;
 import fomt.utils.gl.TileCamera;
@@ -194,7 +195,7 @@ public class GameWindow extends GLWindow {
 		int ny = (getHeight() - Mouse.getY()) - cy + 16;
 		mouseRow = ny / 32;
 		if (mouseRow < 0)
-			mouseRow = -1;
+			mouseRow = 0;
 		else if (mouseRow >= world.getHeight())
 			mouseRow = world.getHeight() - 1;
 		
@@ -205,6 +206,41 @@ public class GameWindow extends GLWindow {
 		worldRenderer.render(camera, world);
 		drawMouseTile();
 		drawClock();
+		drawSpriteTable();
+	}
+	
+	protected void drawSpriteTable() {
+		
+		float alpha = .2f;
+		
+		int tableSize = gameSprites.size();
+		int x = 0;
+		int y = getHeight() - 35;
+		int y2 = y + 32;
+		
+		for (int i = 0; i < tableSize; ++i) {
+			
+			
+			Sprite s = gameSprites.getSprite(i);
+			Texture t = s.getTexture();
+			if (t == null)
+				continue;
+				
+			t.bind();
+			if (i == gameSpriteSelection) {
+				GLRenderer.setColor(1f, 1f, 1f, 1f);
+				GLRenderer.drawTexturedQuad(x, y, x + 32, y2);
+				GLRenderer.setColor(1f, 1f, 1f, alpha);
+			} else {
+				GLRenderer.drawTexturedQuad(x, y, x + 32, y2);
+			}
+			
+			x += 35;
+			
+		}
+		
+		GLRenderer.setColor(1f, 1f, 1f, 1f);
+		
 	}
 	
 	protected void drawMouseTile() {
@@ -239,5 +275,6 @@ public class GameWindow extends GLWindow {
 	WorldRenderer worldRenderer;
 	TrueTypeFont font;
 	private int mouseRow, mouseCol;
+	private int gameSpriteSelection;
 	
 }
