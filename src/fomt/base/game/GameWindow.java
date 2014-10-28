@@ -202,9 +202,10 @@ public class GameWindow extends GLWindow {
 	
 	protected void drawClock()
 	{
-		String s = clock.timeToDisplay();
-		s = clock.seasonName + " " + clock.day + " " + s;
-		font.drawString(getWidth()-font.getWidth(s), getHeight()-font.getHeight(s), s);
+		String time = clock.timeToDisplay();
+		String date = clock.seasonName + " " + clock.day;
+		font.drawString(getWidth()-font.getWidth(time), getHeight()-font.getHeight(time), time);
+		font.drawString(getWidth()-font.getWidth(date) - 120, getHeight()-font.getHeight(date), date);
 	}
 	
 	SpriteTable gameSprites;
