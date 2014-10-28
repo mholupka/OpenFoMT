@@ -2,16 +2,20 @@ package fomt.testerino;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.awt.Font;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
+import fomt.base.tile.TileInfo;
 import fomt.base.world.World;
 import fomt.utils.gl.GLWindow;
-import fomt.base.world.TileInfo;
+import fomt.utils.gl.TileCamera;
 
 public class GLWindowBoys extends GLWindow {
 	
@@ -23,9 +27,14 @@ public class GLWindowBoys extends GLWindow {
 	
 	}
 	
+	TrueTypeFont font;
+	
 	@Override
 	protected void postSetup() {
-	
+		
+		font = new TrueTypeFont(new Font("Times New Roman", Font.ITALIC, 40), true);
+		
+		
 		world = new World("test_world", 10, 10);
 		
 		world.forEachTile(tile -> {
@@ -48,10 +57,13 @@ public class GLWindowBoys extends GLWindow {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-			
+		
+		camera = new TileCamera(0, 0);
+		
 	}
 	
-	float x, y, dx, dy;
+	float lx, ly, x, y, dx, dy;
+	TileCamera camera;
 	
 	//This comment should make changes
 	@Override
@@ -65,8 +77,12 @@ public class GLWindowBoys extends GLWindow {
 		
 		glPushMatrix();
 		
-		glTranslatef(this.x - 160+ f * dx, this.y - 160 + f * dy, 0f);
-	
+		//glTranslatef((f * this.x + (1-f) * this.lx) - 160, (f * this.y + (1-f) * this.ly) - 160, 0f);
+		
+		font.drawString(0, 0, "WHATS UP");
+		
+		camera.apply();
+		
 		for (int i = 0; i < 10; ++i) {
 			for (int j = 0; j < 10; ++j) {
 				
@@ -115,7 +131,31 @@ public class GLWindowBoys extends GLWindow {
 		
 	@Override
 	protected void onTick() {
-				
+			
+		lx = x;
+		ly = y;
+		
+		while (Keyboard.next()) {
+			
+			if (Keyboard.getEventKeyState())
+				continue;
+			
+			switch (Keyboard.getEventKey()) {
+			case Keyboard.KEY_W:
+				camera.down();
+				break;
+			case Keyboard.KEY_A:
+				camera.right();
+				break;
+			case Keyboard.KEY_S:
+				camera.up();
+				break;
+			case Keyboard.KEY_D:
+				camera.left();
+				break;
+			}
+		}
+		
 		if (Mouse.isButtonDown(0)) {
 		
 			int xOff = Mouse.getX() - (int)x;

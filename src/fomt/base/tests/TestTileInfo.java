@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import fomt.base.world.TileInfo;
+import fomt.base.tile.TileInfo;
 
 public class TestTileInfo {
 

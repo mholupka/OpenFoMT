@@ -2,7 +2,7 @@ package fomt.base.tests;
 
 import org.junit.Test;
 
-import fomt.base.world.TileInfo;
+import fomt.base.tile.TileInfo;
 import fomt.base.world.World;
 
 public class TestWorld {
