@@ -75,6 +75,10 @@ public class World {
 					setTileData(row, col, data);
 				}
 			}
+			if(TileInfo.getFGSpriteID(data) == 14)
+			{
+				
+			}
 		}
 	}
 	
