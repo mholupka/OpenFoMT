@@ -169,15 +169,29 @@ public class GameWindow extends GLWindow {
 		
 		updateMouseTile();
 		
+		int wheel;
 		while (Mouse.next()) {
+			
+			wheel = Mouse.getEventDWheel();
+			
+			if (wheel > 0) {
+				--gameSpriteSelection;
+				if (gameSpriteSelection == -1)
+					gameSpriteSelection = gameSprites.size() - 1;
+			} else if (wheel < 0) {
+				gameSpriteSelection = (gameSpriteSelection + 1) % gameSprites.size();
+			}
+			
 			if (Mouse.getEventButtonState())
 				continue;
 			if (Mouse.getEventButton() == 0) {
 				long data = world.getTileData(mouseRow, mouseCol);
-				data = TileInfo.setFGSpriteID(data, 11);
+				data = TileInfo.setFGSpriteID(data, gameSpriteSelection);
 				world.setTileData(mouseRow, mouseCol, data);
 			}
 		}
+		
+		
 		
 	}
 	
@@ -214,10 +228,15 @@ public class GameWindow extends GLWindow {
 		float alpha = .2f;
 		
 		int tableSize = gameSprites.size();
-		int x = 0;
+		int fullWidth = tableSize * 35;
+		
+		int x = (getWidth() - fullWidth) / 2;
 		int y = getHeight() - 35;
 		int y2 = y + 32;
 		
+		GLRenderer.setColor(1f, 1f, 1f, alpha);
+		
+	
 		for (int i = 0; i < tableSize; ++i) {
 			
 			
