@@ -1,5 +1,6 @@
 package fomt.base.world;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import fomt.base.tile.TileInfo;
@@ -13,6 +14,7 @@ public class World {
 		this.width = width;
 		this.height = height;
 		this.tileData = new long[width * height];
+		this.updateList = new ArrayList<int[]>();
 	}
 	
 	// --- Instance Methods ---
@@ -31,6 +33,52 @@ public class World {
 		}
 		
 	}
+	
+	public void addTileToUpdate(int x, int y)
+	{
+		int[] a = new int[2];
+		a[0] = x;
+		a[1] = y;
+		updateList.add(a);
+	}
+	
+	public void removeTileFromUpdate(int x, int y)
+	{
+		int[] a = new int[2];
+		a[0] = x;
+		a[1] = y;
+		updateList.remove(a);
+	}
+	
+	public void dayUpdate()
+	{
+		for(int i = 0; i < updateList.size(); i++)
+		{
+			int row = updateList.get(i)[0];
+			int col = updateList.get(i)[1];
+			long data = getTileData(row, col);
+			if(TileInfo.getFGSpriteID(data) == 11)
+			{
+				long metaData = TileInfo.getMetaData(data);
+				long timeToDecay = metaData &0x7;
+				--timeToDecay;
+				if (timeToDecay == 0)
+				{
+					data = TileInfo.setFGSpriteID(data, 12);
+					data = TileInfo.setMetaData(data, 0);
+					setTileData(row, col, data);
+				}
+				else
+				{
+					metaData = (metaData &~0x7)|timeToDecay;
+					data = TileInfo.setMetaData(data, (int)metaData);
+					setTileData(row, col, data);
+				}
+			}
+		}
+	}
+	
+	// --- Get and Set Methods ---
 	
 	public final long[] getTileData() { 
 		return tileData;
@@ -59,5 +107,7 @@ public class World {
 	protected long[] tileData;
 	
 	protected int width, height;
+	
+	ArrayList<int[]> updateList;
 	
 }

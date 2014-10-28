@@ -20,7 +20,13 @@ public class TileCamera implements ICamera {
 	
 	@Override
 	public void apply() {
+		GL11.glPushMatrix();
 		GL11.glTranslatef(col * -32 + screenWidthHalf - 16, row * -32 + screenHeightHalf - 16, zoom);
+	}
+	
+	@Override
+	public void unapply() {
+		GL11.glPopMatrix();
 	}
 	
 	public void left() { ++col; }

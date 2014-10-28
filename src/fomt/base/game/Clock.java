@@ -6,7 +6,10 @@ public class Clock {
 	public Clock(int time)
 	{
 		this.time = time;
-		this.ticks = 0;
+		this.day = 1;
+		this.ticks = 1;
+		this.season = 1;
+		this.seasonName = "Spring";
 	}
 	
 	// --- Class Methods ---
@@ -25,13 +28,36 @@ public class Clock {
 		return displayTime;
 	}
 	
+	public void updateSeasonName()
+	{
+		if(season == 1)
+			seasonName = "Spring";
+		else if(season == 2)
+			seasonName = "Summer";
+		else if(season == 3) 
+			seasonName = "Fall";
+		else
+			seasonName = "Winter";
+	}
+	
 	public void updateTime()
 	{
 		ticks += 1;
-		if (ticks == 500)
+		if (ticks == 2)
 		{
-			if (time == 1440)
+			if (time == 1430)
+			{
 				time = 0;
+				++day;
+				if (day == 31)
+				{
+					++season;
+					day = 1;
+					if (season == 5)
+						season = 1;
+					updateSeasonName();
+				}
+			}
 			else
 				time += 10;
 			ticks = 0;
@@ -39,8 +65,16 @@ public class Clock {
 		
 	}
 	
+	public Boolean dayChanged()
+	{
+		return ticks == 0 && time == 0;
+	}
+	
 	// --- Instance Fields ---
 	
 		protected int time;
+		protected int day;
 		protected int ticks;
+		protected int season;
+		protected String seasonName;
 }
