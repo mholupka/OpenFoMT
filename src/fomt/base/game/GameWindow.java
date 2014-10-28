@@ -188,6 +188,10 @@ public class GameWindow extends GLWindow {
 				long data = world.getTileData(mouseRow, mouseCol);
 				data = TileInfo.setFGSpriteID(data, gameSpriteSelection);
 				world.setTileData(mouseRow, mouseCol, data);
+			} else if (Mouse.getEventButton() == 1) {
+				long data = world.getTileData(mouseRow, mouseCol);
+				data = TileInfo.setBGSpriteID(data, gameSpriteSelection);
+				world.setTileData(mouseRow, mouseCol, data);
 			}
 		}
 		
