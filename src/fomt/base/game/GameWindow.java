@@ -8,6 +8,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -159,13 +161,39 @@ public class GameWindow extends GLWindow {
 				break;
 			}
 		}
+		
+		int mx = Mouse.getX();
+		int cx = getWidth() / 2 - camera.getX();
+		int nx = cx - mx;
+		System.out.println(mx + " : " + cx + " : " + (nx / 32));
+		mouseCol = nx / 32;
+		
 	}
 	
 	public void render(float f)
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 		worldRenderer.render(camera, world);
+		drawMouseTile();
 		drawClock();
+	}
+	
+	protected void drawMouseTile() {
+		
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		GL11.glColor3f(1f, 1f, 1f);
+		
+		camera.apply();
+		GL11.glBegin(GL11.GL_LINE_LOOP);
+		GL11.glVertex2f(mouseCol * 32, mouseRow * 32);
+		GL11.glVertex2f(mouseCol * 32 + 32, mouseRow * 32);
+		GL11.glVertex2f(mouseCol * 32 + 32, mouseRow * 32 + 32);
+		GL11.glVertex2f(mouseCol * 32, mouseRow * 32 + 32);
+		GL11.glEnd();
+		camera.unapply();
+		
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		
 	}
 	
 	protected void drawClock()
@@ -181,5 +209,6 @@ public class GameWindow extends GLWindow {
 	World world;
 	WorldRenderer worldRenderer;
 	TrueTypeFont font;
+	private int mouseRow, mouseCol;
 	
 }

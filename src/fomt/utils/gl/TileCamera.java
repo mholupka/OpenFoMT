@@ -42,4 +42,14 @@ public class TileCamera implements ICamera {
 	protected int row, col, screenWidthHalf, screenHeightHalf;
 	protected float rot, zoom;
 	
+	@Override
+	public int getX() {
+		return col * 32;
+	}
+	
+	@Override
+	public int getY() {
+		return row * 32;
+	}
+	
 }
