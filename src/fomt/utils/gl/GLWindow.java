@@ -99,6 +99,7 @@ public abstract class GLWindow {
 			}
 			
 			f = (float)t2 / (float)period;
+			
 			render(f);
 			
 			++frameCount;

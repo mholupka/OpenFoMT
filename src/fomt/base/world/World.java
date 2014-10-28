@@ -2,7 +2,7 @@ package fomt.base.world;
 
 import java.util.function.Consumer;
 
-//import fomt.base.mob.Mob;
+import fomt.base.tile.TileInfo;
 
 public class World {
 
@@ -14,6 +14,7 @@ public class World {
 		this.height = height;
 		this.tileData = new long[width * height];
 	}
+	
 	// --- Instance Methods ---
 	
 	public void forEachTile(Consumer<TileInfo> lambda) {

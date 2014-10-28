@@ -1,4 +1,4 @@
-package fomt.base.world;
+package fomt.base.tile;
 
 public class TileInfo {
 	
