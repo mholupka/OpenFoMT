@@ -14,6 +14,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 import fomt.base.tile.TileInfo;
 import fomt.base.world.World;
+import fomt.base.game.Clock;
 import fomt.utils.gl.GLWindow;
 import fomt.utils.gl.TileCamera;
 
@@ -28,6 +29,8 @@ public class GLWindowBoys extends GLWindow {
 	}
 	
 	TrueTypeFont font;
+	
+	Clock c = new Clock(0);
 	
 	@Override
 	protected void postSetup() {
@@ -58,14 +61,19 @@ public class GLWindowBoys extends GLWindow {
 			e.printStackTrace();
 		}
 		
-		camera = new TileCamera(0, 0);
+		camera = new TileCamera(4, 4, getWidth(), getHeight());
 		
 	}
 	
 	float lx, ly, x, y, dx, dy;
 	TileCamera camera;
 	
-	//This comment should make changes
+	protected void drawClock(Clock c)
+	{
+		String s = c.timeToDisplay();
+		font.drawString(getWidth()-font.getWidth(s), getHeight()-font.getHeight(s), s);
+	}
+	
 	@Override
 	protected void render(float f) {
 		
@@ -78,8 +86,6 @@ public class GLWindowBoys extends GLWindow {
 		glPushMatrix();
 		
 		//glTranslatef((f * this.x + (1-f) * this.lx) - 160, (f * this.y + (1-f) * this.ly) - 160, 0f);
-		
-		font.drawString(0, 0, "WHATS UP");
 		
 		camera.apply();
 		
@@ -106,6 +112,10 @@ public class GLWindowBoys extends GLWindow {
 		}
 		
 		glPopMatrix();
+
+		drawQuad(getWidth()/2, getHeight()/2, (getWidth()/2)+1, (getHeight()/2)+1);
+		
+		drawClock(c);
 		
 	}
 	
@@ -134,6 +144,8 @@ public class GLWindowBoys extends GLWindow {
 			
 		lx = x;
 		ly = y;
+		
+		c.updateTime();
 		
 		while (Keyboard.next()) {
 			

@@ -7,31 +7,33 @@ public class TileCamera implements ICamera {
 	// --- Constructors ---
 	
 	public TileCamera() {
-		this(0, 0);
+		this(0, 0, 0, 0);
 	}
-	public TileCamera(int row, int col) {
+	public TileCamera(int row, int col, int screenWidth, int screenHeight) {
 		this.row = row;
 		this.col = col;
+		this.screenWidthHalf = screenWidth / 2;
+		this.screenHeightHalf = screenHeight / 2;
 	}
 	
 	// --- Instance Methods ---
 	
 	@Override
 	public void apply() {
-		GL11.glTranslatef(col * 32, row * 32, zoom);
+		GL11.glTranslatef(col * -32 + screenWidthHalf - 16, row * -32 + screenHeightHalf - 16, zoom);
 	}
 	
-	public void left() { --col; }
-	public void right() { ++col; }
-	public void up() { --row; }
-	public void down() { ++row; }
+	public void left() { ++col; }
+	public void right() { --col; }
+	public void up() { ++row; }
+	public void down() { --row; }
 	
 	public int getRow() { return row; }
 	public int getColumn() { return col; }
 	
 	// --- Instance Fields ---
 	
-	protected int row, col;
+	protected int row, col, screenWidthHalf, screenHeightHalf;
 	protected float rot, zoom;
 	
 }
