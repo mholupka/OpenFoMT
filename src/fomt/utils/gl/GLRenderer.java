@@ -45,4 +45,24 @@ public class GLRenderer {
 	
 	}
 	
+	public static void drawTexturedQuad(float x0, float y0, float x1, float y1, float tx0, float ty0, float tx1, float ty1) {
+		
+		glBegin(GL_QUADS);
+		
+		glTexCoord2f(tx0, ty0);
+		glVertex2f(x0, y0);
+		
+		glTexCoord2f(tx1, ty0);
+		glVertex2f(x1, y0);
+		
+		glTexCoord2f(tx1, ty1);
+		glVertex2f(x1, y1);
+
+		glTexCoord2f(tx0, ty1);
+		glVertex2f(x0, y1);
+		
+		glEnd();
+	
+	}
+	
 }

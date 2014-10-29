@@ -145,6 +145,8 @@ public class GameWindow extends GLWindow {
 			gameSprites.addSprite(new Sprite(18, tex));
 			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/yellowCatGrass.png"));
 			gameSprites.addSprite(new Sprite(19, tex));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/water.png"));
+			gameSprites.addSprite(new Sprite(20, tex));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -160,6 +162,7 @@ public class GameWindow extends GLWindow {
 	public void onTick() 
 	{
 		clock.updateTime();
+		worldRenderer.onTick();
 		
 		if (clock.dayChanged())
 		{
@@ -254,10 +257,56 @@ public class GameWindow extends GLWindow {
 		drawMouseTile();
 		drawClock();
 		drawSpriteTable();
-		
-		GLRenderer.setColor(0, 0, 0, .5f);
-		GLRenderer.drawQuad(0, 0, getWidth(), getHeight());
-		
+		//drawFilter();
+	}
+	
+	protected void drawFilter()
+	{
+		if(clock.time - 1080 >= 0 && clock.time - 1080 < 60 )
+		{
+			float alpha = (clock.time - 1080)*.0025f;
+			GLRenderer.setColor(1, 204/255f, 0, alpha);
+			GLRenderer.drawQuad(getWidth() / 2 - camera.getX() - 16, getHeight() / 2 - camera.getY() -16, (getWidth() / 2 - camera.getX() - 16) + 32 * world.getWidth(), (getHeight() / 2 - camera.getY() - 16) + 32 * world.getHeight());
+		}
+		if(clock.time - 1080 >= 60 && clock.time - 1080 < 180 )
+		{
+			float r = 255-(((clock.time - 1140f)/10)*21.25f);
+			float g = 204-(((clock.time - 1140f)/10)*12.75f);
+			float b = ((clock.time - 1140f)/10)*8.5f;
+			GLRenderer.setColor(r/255f, g/255f, b/255f, .15f);
+			GLRenderer.drawQuad(getWidth() / 2 - camera.getX() - 16, getHeight() / 2 - camera.getY() -16, (getWidth() / 2 - camera.getX() - 16) + 32 * world.getWidth(), (getHeight() / 2 - camera.getY() - 16) + 32 * world.getHeight());
+		}
+		if(clock.time >= 1200 && clock.time < 1260)
+		{
+			float alpha = .15f + (((clock.time - 1200)/10)*.035f);
+			GLRenderer.setColor(0, 51/255f, 102/255f, alpha);
+			GLRenderer.drawQuad(getWidth() / 2 - camera.getX() - 16, getHeight() / 2 - camera.getY() -16, (getWidth() / 2 - camera.getX() - 16) + 32 * world.getWidth(), (getHeight() / 2 - camera.getY() - 16) + 32 * world.getHeight());
+		}
+		if(clock.time >= 1260 || clock.time < 300)
+		{
+			GLRenderer.setColor(0, 51/255f, 102/255f, .36f);
+			GLRenderer.drawQuad(getWidth() / 2 - camera.getX() - 16, getHeight() / 2 - camera.getY() -16, (getWidth() / 2 - camera.getX() - 16) + 32 * world.getWidth(), (getHeight() / 2 - camera.getY() - 16) + 32 * world.getHeight());
+		}
+		if(clock.time >= 300 && clock.time < 360)
+		{
+			float alpha = .36f - (((clock.time - 300)/10)*.035f);
+			GLRenderer.setColor(0, 51/255f, 102/255f, alpha);
+			GLRenderer.drawQuad(getWidth() / 2 - camera.getX() - 16, getHeight() / 2 - camera.getY() -16, (getWidth() / 2 - camera.getX() - 16) + 32 * world.getWidth(), (getHeight() / 2 - camera.getY() - 16) + 32 * world.getHeight());
+		}
+		if(clock.time >= 360 && clock.time < 480 )
+		{
+			float r = (((clock.time - 360f)/10)*21.25f);
+			float g = 51+(((clock.time - 360f)/10)*12.75f);
+			float b = 102-((clock.time - 360f)/10)*8.5f;
+			GLRenderer.setColor(r/255f, g/255f, b/255f, .15f);
+			GLRenderer.drawQuad(getWidth() / 2 - camera.getX() - 16, getHeight() / 2 - camera.getY() -16, (getWidth() / 2 - camera.getX() - 16) + 32 * world.getWidth(), (getHeight() / 2 - camera.getY() - 16) + 32 * world.getHeight());
+		}
+		if(clock.time >= 480 && clock.time < 540 )
+		{
+			float alpha = (540 - clock.time)*.0025f;
+			GLRenderer.setColor(1, 204/255f, 0, alpha);
+			GLRenderer.drawQuad(getWidth() / 2 - camera.getX() - 16, getHeight() / 2 - camera.getY() -16, (getWidth() / 2 - camera.getX() - 16) + 32 * world.getWidth(), (getHeight() / 2 - camera.getY() - 16) + 32 * world.getHeight());
+		}
 	}
 	
 	protected void drawSpriteTable() {

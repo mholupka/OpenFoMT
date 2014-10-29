@@ -6,12 +6,14 @@ import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
+import org.lwjgl.Sys;
 import org.newdawn.slick.opengl.Texture;
 
 import fomt.base.sprite.Sprite;
 import fomt.base.sprite.SpriteTable;
 import fomt.base.tile.TileInfo;
 import fomt.base.world.World;
+import fomt.utils.gl.GLRenderer;
 import fomt.utils.gl.ICamera;
 
 public class WorldRenderer {
@@ -23,6 +25,16 @@ public class WorldRenderer {
 	}
 	
 	// --- Instance Methods ---
+	
+	int globalAnimState = 0;
+	long lastAnimSHTUFF = 0;
+	
+	public void onTick() {
+		if (Sys.getTime() - lastAnimSHTUFF >= 500) {
+			globalAnimState++;		
+			lastAnimSHTUFF = Sys.getTime();
+		}
+	}
 	
 	public void render(ICamera camera, World world) {
 		
@@ -40,9 +52,18 @@ public class WorldRenderer {
 			Sprite sprite = sprites.getSprite(bgSpriteID);
 			Texture texture = sprite.getTexture();
 			
-			if (texture != null) {
+			if (bgSpriteID == 20) {
 				texture.bind();
-				drawQuad(c * 32, r * 32, c * 32 + 32, r * 32 + 32);	
+				if (globalAnimState % 2 == 0) {
+					GLRenderer.drawTexturedQuad(c * 32, r * 32, c * 32 + 32, r * 32 + 32, 0f, 0f, .5f, 1f);
+				} else {
+					GLRenderer.drawTexturedQuad(c * 32, r * 32, c * 32 + 32, r * 32 + 32, .5f, 0f, 1f, 1f);
+				}
+			} else {
+				if (texture != null) {
+					texture.bind();
+					drawQuad(c * 32, r * 32, c * 32 + 32, r * 32 + 32);	
+				}
 			}
 			
 			sprite = sprites.getSprite(fgSpriteID);
