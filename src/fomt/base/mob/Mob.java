@@ -18,7 +18,6 @@ public class Mob {
 	public void onTick() {
 		
 		
-		
 	}
 	
 	// --- Instance Fields ---
