@@ -3,6 +3,8 @@ package fomt.base.world;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import fomt.base.crops.Crop;
+import fomt.base.crops.CropTable;
 import fomt.base.tile.TileInfo;
 
 public class World {
@@ -50,7 +52,7 @@ public class World {
 		updateList.remove(a);
 	}
 	
-	public void dayUpdate()
+	public void dayUpdate(CropTable crops)
 	{
 		for(int i = 0; i < updateList.size(); i++)
 		{
@@ -75,9 +77,37 @@ public class World {
 					setTileData(row, col, data);
 				}
 			}
-			if(TileInfo.getFGSpriteID(data) == 14)
+			if(TileInfo.getFGSpriteID(data) == 14 || TileInfo.getFGSpriteID(data) == 15 || TileInfo.getFGSpriteID(data) == 16 || TileInfo.getFGSpriteID(data) == 17)
 			{
-				
+				int metaData = TileInfo.getMetaData(data);
+				int isWatered = metaData &0x1;
+				int cropType = (metaData &0x3FF00) >> 8;
+				Crop crop = crops.getCrop(cropType);
+				int currCycle = (metaData &0xE0) >> 5;
+				if (currCycle == crop.getNumCycles()-1)
+				{
+					updateList.remove(i);
+				}
+				else
+				{
+					if (isWatered == 1)
+					{
+						int daysInCycle = (metaData &0x1E) >> 1;
+						++daysInCycle;
+						if (daysInCycle == crop.getDaysToGrow()[currCycle])
+						{
+							daysInCycle = 0;
+							++currCycle;
+							data = TileInfo.setFGSpriteID(data, crop.getCycleIds()[currCycle]);
+						}
+						//isWatered = 0;
+						metaData = (metaData &~0x1)|isWatered;
+						metaData = (metaData &~0xE0)|(currCycle << 5);
+						metaData = (metaData &~0x1E)|(daysInCycle << 1);
+						data = TileInfo.setMetaData(data, metaData);
+						setTileData(row, col, data);
+					}
+				}
 			}
 		}
 	}

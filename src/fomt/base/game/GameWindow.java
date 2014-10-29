@@ -14,6 +14,8 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
+import fomt.base.crops.Crop;
+import fomt.base.crops.CropTable;
 import fomt.base.sprite.Sprite;
 import fomt.base.sprite.SpriteTable;
 import fomt.base.tile.TileInfo;
@@ -33,7 +35,9 @@ public class GameWindow extends GLWindow {
 	public void postSetup()
 	{
 		gameSprites = new SpriteTable();
+		crops = new CropTable();
 		loadSprites();
+		loadCrops();
 		
 		font = new TrueTypeFont(new Font("Times New Roman", Font.ITALIC, 40), true);
 		
@@ -86,7 +90,12 @@ public class GameWindow extends GLWindow {
 			{
 				data = TileInfo.setBGSpriteID(data, 13);
 				data = TileInfo.setFGSpriteID(data, 14);
-				world.setTileData(r, c, TileInfo.setMetaData(data, 3));
+				int metaData = TileInfo.getMetaData(data);
+				metaData = (metaData &~0x1)|1;
+				metaData = (metaData &~0x1E)|0 << 1;
+				metaData = (metaData &~0xE0)|0 << 5;
+				metaData = (metaData &~0x3FF00)|0 << 8;
+				world.setTileData(r, c, TileInfo.setMetaData(data, metaData));
 			}
 			
 		});
@@ -138,13 +147,18 @@ public class GameWindow extends GLWindow {
 		}
 	}
 	
+	public void loadCrops()
+	{
+		crops.addCrop(new Crop(new int[] {1,2,3,4}, 4, new int[] {14, 15, 16, 17}, 0));
+	}
+	
 	public void onTick() 
 	{
 		clock.updateTime();
 		
 		if (clock.dayChanged())
 		{
-			world.dayUpdate();
+			world.dayUpdate(crops);
 		}
 		
 		while (Keyboard.next()) {
@@ -290,6 +304,7 @@ public class GameWindow extends GLWindow {
 	}
 	
 	SpriteTable gameSprites;
+	CropTable crops;
 	Clock clock;
 	ICamera camera;
 	World world;
