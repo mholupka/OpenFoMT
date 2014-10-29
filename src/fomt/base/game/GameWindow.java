@@ -58,28 +58,36 @@ public class GameWindow extends GLWindow {
 				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 1));
 			} 
 			else if (r == 1 && c == 1) {
-				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 6));
+				data = TileInfo.setBGSpriteID(data, 2);
+				world.setTileData(r, c, TileInfo.setFGSpriteID(data, 6));
 			}
 			else if (r == 1 && c > 1 && c < 18) {
-				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 10));
+				data = TileInfo.setBGSpriteID(data, 2);
+				world.setTileData(r, c, TileInfo.setFGSpriteID(data, 10));
 			}
 			else if (r == 1 &&  c == 18) {
-				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 5));
+				data = TileInfo.setBGSpriteID(data, 2);
+				world.setTileData(r, c, TileInfo.setFGSpriteID(data, 5));
 			}
 			else if (c == 1 && r > 1 && r < 18) {
-				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 7));
+				data = TileInfo.setBGSpriteID(data, 2);
+				world.setTileData(r, c, TileInfo.setFGSpriteID(data, 7));
 			}
 			else if (c == 1 && r == 18) {
-				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 3));
+				data = TileInfo.setBGSpriteID(data, 2);
+				world.setTileData(r, c, TileInfo.setFGSpriteID(data, 3));
 			}
 			else if (r == 18 && c > 1 && c < 18) {
-				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 8));
+				data = TileInfo.setBGSpriteID(data, 2);
+				world.setTileData(r, c, TileInfo.setFGSpriteID(data, 8));
 			}
 			else if (r == 18 &&  c == 18) {
-				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 4));
+				data = TileInfo.setBGSpriteID(data, 2);
+				world.setTileData(r, c, TileInfo.setFGSpriteID(data, 4));
 			}
 			else if (c == 18 && r > 1 && r < 18) {
-				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 9));
+				data = TileInfo.setBGSpriteID(data, 2);
+				world.setTileData(r, c, TileInfo.setFGSpriteID(data, 9));
 			}
 			else if ((c == 5 && r ==5 )||(c == 6 && r == 5)||(c == 7 && r == 5))
 			{
@@ -111,21 +119,21 @@ public class GameWindow extends GLWindow {
 			gameSprites.addSprite(new Sprite(1, tex));
 			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/farmDirt.png"));
 			gameSprites.addSprite(new Sprite(2, tex));
-			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassDirtCornerBottomLeft.png"));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassCornerBottomLeft.png"));
 			gameSprites.addSprite(new Sprite(3, tex));
-			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassDirtCornerBottomRight.png"));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassCornerBottomRight.png"));
 			gameSprites.addSprite(new Sprite(4, tex));
-			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassDirtCornerTopRight.png"));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassCornerTopRight.png"));
 			gameSprites.addSprite(new Sprite(5, tex));
-			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassDirtCornerTopLeft.png"));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassCornerTopLeft.png"));
 			gameSprites.addSprite(new Sprite(6, tex));
-			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassDirtEdgeLeft.png"));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassEdgeLeft.png"));
 			gameSprites.addSprite(new Sprite(7, tex));
-			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassDirtEdgeBottom.png"));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassEdgeBottom.png"));
 			gameSprites.addSprite(new Sprite(8, tex));
-			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassDirtEdgeRight.png"));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassEdgeRight.png"));
 			gameSprites.addSprite(new Sprite(9, tex));
-			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassDirtEdgetop.png"));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassEdgetop.png"));
 			gameSprites.addSprite(new Sprite(10, tex));
 			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/log1.png"));
 			gameSprites.addSprite(new Sprite(11, tex));
@@ -147,6 +155,14 @@ public class GameWindow extends GLWindow {
 			gameSprites.addSprite(new Sprite(19, tex));
 			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/water.png"));
 			gameSprites.addSprite(new Sprite(20, tex));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassCornerBottomLeftOuter.png"));
+			gameSprites.addSprite(new Sprite(21, tex));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassCornerBottomRightOuter.png"));
+			gameSprites.addSprite(new Sprite(22, tex));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassCornerTopRightOuter.png"));
+			gameSprites.addSprite(new Sprite(23, tex));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassCornerTopLeftOuter.png"));
+			gameSprites.addSprite(new Sprite(24, tex));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -257,7 +273,7 @@ public class GameWindow extends GLWindow {
 		drawMouseTile();
 		drawClock();
 		drawSpriteTable();
-		//drawFilter();
+		drawFilter();
 	}
 	
 	protected void drawFilter()

@@ -26,6 +26,10 @@ public class TileTable {
 		new BlueCatGrass(),		// 18
 		new YellowCatGrass(),	// 19
 		null,					// 20
+		null,					// 21
+		null,					// 22
+		null,					// 23
+		null,					// 24
 		
 	};
 
