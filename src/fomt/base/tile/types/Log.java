@@ -26,7 +26,7 @@ public class Log extends TileType implements ITileDayUpdate {
 		world.setTileData(row, col, TileInfo.setMetaData(data, 3));
 		
 		// add this tile to the update list
-		world.addTileToUpdate(row, col);
+		world.addTileToUpdate(row, col, this);
 		
 	}
 

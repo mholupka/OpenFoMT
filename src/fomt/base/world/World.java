@@ -1,8 +1,6 @@
 package fomt.base.world;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
@@ -19,7 +17,6 @@ public class World {
 		this.width = width;
 		this.height = height;
 		this.tileData = new long[width * height];
-		this.updateList = new LinkedList<int[]>();
 		this.fgDayUpdateList = new HashMap<>();
 		this.bgDayUpdateList = new HashMap<>();
 	}
@@ -41,64 +38,20 @@ public class World {
 		
 	}
 	
-	public void addTileToUpdate(int x, int y)
-	{
-		int[] a = new int[2];
-		a[0] = x;
-		a[1] = y;
-		updateList.add(a);
-	
-		// new version
-		
+	public void addTileToUpdate(int x, int y, ITileDayUpdate fn)
+	{	
 		long key = (long)x | ((long)y << 32L);
-		fgDayUpdateList.put(key, null);
+		fgDayUpdateList.put(key, fn);
 	}
 	
 	public void removeTileFromUpdate(int x, int y)
 	{
-		int[] a = new int[2];
-		a[0] = x;
-		a[1] = y;
-		updateList.remove(a);
-		
-		// new
 		long key = (long)x | ((long)y << 32L);
 		fgDayUpdateList.remove(key);
 	}
 	
-	public void dayUpdate()
+	public void onDayUpdate()
 	{
-		for(int i = 0; i < updateList.size(); i++)
-		{
-			int row = updateList.get(i)[0];
-			int col = updateList.get(i)[1];
-			long data = getTileData(row, col);
-			if(TileInfo.getFGSpriteID(data) == 11)
-			{
-				long metaData = TileInfo.getMetaData(data);
-				long timeToDecay = metaData &0x7;
-				--timeToDecay;
-				if (timeToDecay == 0)
-				{
-					data = TileInfo.setFGSpriteID(data, 12);
-					data = TileInfo.setMetaData(data, 0);
-					setTileData(row, col, data);
-				}
-				else
-				{
-					metaData = (metaData &~0x7)|timeToDecay;
-					data = TileInfo.setMetaData(data, (int)metaData);
-					setTileData(row, col, data);
-				}
-			}
-			if(TileInfo.getFGSpriteID(data) == 14)
-			{
-				
-			}
-		}
-		
-		// new
-
 		long key;
 		int row, col;
 		
@@ -146,8 +99,6 @@ public class World {
 	protected long[] tileData;
 	
 	protected int width, height;
-	
-	List<int[]> updateList;
 	
 	Map<Long, ITileDayUpdate> bgDayUpdateList;
 	Map<Long, ITileDayUpdate> fgDayUpdateList;

@@ -14,13 +14,14 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
-import fomt.base.crops.Crop;
 import fomt.base.crops.CropTable;
 import fomt.base.sprite.Sprite;
 import fomt.base.sprite.SpriteTable;
 import fomt.base.tile.TileInfo;
 import fomt.base.tile.TileTable;
 import fomt.base.tile.TileType;
+import fomt.base.tile.types.Crop;
+import fomt.base.tile.types.PinkCatGrass;
 import fomt.base.world.World;
 import fomt.utils.gl.GLRenderer;
 import fomt.utils.gl.GLWindow;
@@ -88,21 +89,12 @@ public class GameWindow extends GLWindow {
 			
 			data = world.getTileData(r, c);
 			
-			if (r == 5 && c == 5)
-			{
-				data = TileInfo.setBGSpriteID(data, 13);
-				data = TileInfo.setFGSpriteID(data, 14);
-				int metaData = TileInfo.getMetaData(data);
-				metaData = (metaData &~0x1)|1;
-				metaData = (metaData &~0x1E)|0 << 1;
-				metaData = (metaData &~0xE0)|0 << 5;
-				metaData = (metaData &~0x3FF00)|0 << 8;
-				world.setTileData(r, c, TileInfo.setMetaData(data, metaData));
-			}
-			
 		});
+
+		TileTable.table[PinkCatGrass.SPRITE_ID].onPutDown(world, 5, 5);
 		
-		world.addTileToUpdate(5, 5);
+		//world.addTileToUpdate(5, 5);
+		
 	}
 	
 	public void loadSprites()
@@ -151,7 +143,7 @@ public class GameWindow extends GLWindow {
 	
 	public void loadCrops()
 	{
-		crops.addCrop(new Crop(new int[] {1,2,3,4}, 4, new int[] {14, 15, 16, 17}, 0));
+		crops.addCrop((Crop)TileTable.table[PinkCatGrass.SPRITE_ID]);
 	}
 	
 	public void onTick() 
@@ -160,7 +152,7 @@ public class GameWindow extends GLWindow {
 		
 		if (clock.dayChanged())
 		{
-			world.dayUpdate(crops);
+			world.onDayUpdate();
 		}
 		
 		while (Keyboard.next()) {
@@ -204,7 +196,11 @@ public class GameWindow extends GLWindow {
 			
 			if (Mouse.getEventButton() == 0) {
 				TileType type = TileTable.table[gameSpriteSelection];
-				if (type != null) {
+				if (type == null) {
+					long data = world.getTileData(mouseRow, mouseCol);
+					data = TileInfo.setFGSpriteID(data, gameSpriteSelection);
+					world.setTileData(mouseRow, mouseCol, data);
+				} else {
 					type.onPutDown(world, mouseRow, mouseCol);
 				}
 			} else if (Mouse.getEventButton() == 1) {

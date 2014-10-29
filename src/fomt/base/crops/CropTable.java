@@ -2,12 +2,15 @@ package fomt.base.crops;
 
 import java.util.ArrayList;
 
+import fomt.base.tile.types.Crop;
+
 public class CropTable {
 
 	// --- Constructors ---
+	
 	public CropTable()
 	{
-		this.crops = new ArrayList<Crop>();
+		this.crops = new ArrayList<>();
 	}
 	
 	// --- Instance Methods ---
@@ -28,5 +31,7 @@ public class CropTable {
 	}
 	
 	// --- Instance Fields ---
+	
 	protected ArrayList<Crop> crops;
+
 }
