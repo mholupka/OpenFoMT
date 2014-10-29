@@ -1,9 +1,14 @@
 package fomt.base.world;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 import fomt.base.tile.TileInfo;
+import fomt.base.tiles.ITileDayUpdate;
 
 public class World {
 
@@ -14,7 +19,9 @@ public class World {
 		this.width = width;
 		this.height = height;
 		this.tileData = new long[width * height];
-		this.updateList = new ArrayList<int[]>();
+		this.updateList = new LinkedList<int[]>();
+		this.fgDayUpdateList = new HashMap<>();
+		this.bgDayUpdateList = new HashMap<>();
 	}
 	
 	// --- Instance Methods ---
@@ -40,6 +47,11 @@ public class World {
 		a[0] = x;
 		a[1] = y;
 		updateList.add(a);
+	
+		// new version
+		
+		long key = (long)x | ((long)y << 32L);
+		fgDayUpdateList.put(key, null);
 	}
 	
 	public void removeTileFromUpdate(int x, int y)
@@ -48,6 +60,10 @@ public class World {
 		a[0] = x;
 		a[1] = y;
 		updateList.remove(a);
+		
+		// new
+		long key = (long)x | ((long)y << 32L);
+		fgDayUpdateList.remove(key);
 	}
 	
 	public void dayUpdate()
@@ -79,6 +95,19 @@ public class World {
 			{
 				
 			}
+		}
+		
+		// new
+		
+		for (Entry<Long, ITileDayUpdate> e : bgDayUpdateList.entrySet()) {
+			
+			long key = e.getKey();
+			
+			int row = (int)key;
+			int col = (int)(key >> 32);
+			
+			e.getValue().onDayUpdate(this, row, col);
+			
 		}
 	}
 	
@@ -112,6 +141,9 @@ public class World {
 	
 	protected int width, height;
 	
-	ArrayList<int[]> updateList;
+	List<int[]> updateList;
+	
+	Map<Long, ITileDayUpdate> bgDayUpdateList;
+	Map<Long, ITileDayUpdate> fgDayUpdateList;
 	
 }

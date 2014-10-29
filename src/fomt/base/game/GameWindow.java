@@ -17,6 +17,8 @@ import org.newdawn.slick.opengl.TextureLoader;
 import fomt.base.sprite.Sprite;
 import fomt.base.sprite.SpriteTable;
 import fomt.base.tile.TileInfo;
+import fomt.base.tiles.TileTable;
+import fomt.base.tiles.TileType;
 import fomt.base.world.World;
 import fomt.utils.gl.GLRenderer;
 import fomt.utils.gl.GLWindow;
@@ -185,15 +187,19 @@ public class GameWindow extends GLWindow {
 			
 			if (Mouse.getEventButtonState())
 				continue;
+			
 			if (Mouse.getEventButton() == 0) {
 				long data = world.getTileData(mouseRow, mouseCol);
-				data = TileInfo.setFGSpriteID(data, gameSpriteSelection);
-				world.setTileData(mouseRow, mouseCol, data);
+				TileType type = TileTable.table[gameSpriteSelection];
+				if (type != null) {
+					type.onPutDown(world, new TileInfo(mouseRow, mouseCol, data));
+				}
 			} else if (Mouse.getEventButton() == 1) {
 				long data = world.getTileData(mouseRow, mouseCol);
 				data = TileInfo.setBGSpriteID(data, gameSpriteSelection);
 				world.setTileData(mouseRow, mouseCol, data);
 			}
+			
 		}
 		
 		
@@ -241,9 +247,7 @@ public class GameWindow extends GLWindow {
 		
 		GLRenderer.setColor(1f, 1f, 1f, alpha);
 		
-	
 		for (int i = 0; i < tableSize; ++i) {
-			
 			
 			Sprite s = gameSprites.getSprite(i);
 			Texture t = s.getTexture();
