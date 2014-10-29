@@ -20,8 +20,7 @@ public abstract class Crop extends TileType implements ITileDayUpdate {
 	
 		long data = world.getTileData(row, col);
 		
-		data = TileInfo.setBGSpriteID(data, 13);
-		data = TileInfo.setFGSpriteID(data, 14);
+		data = TileInfo.setFGSpriteID(data, getSpriteForCycle(0));
 		
 		int metaData = TileInfo.getMetaData(data);
 		metaData = (metaData & ~0x1) | 1;
@@ -45,7 +44,7 @@ public abstract class Crop extends TileType implements ITileDayUpdate {
 		//int cropType = (metadata &0x3FF00) >> 8;
 		int currCycle = (metadata &0xE0) >> 5;
 		
-		if (currCycle == getNumCycles() - 1) {
+		if (currCycle == getNumCycles()) {
 			world.removeTileFromUpdate(row, col);
 		} else {
 			if (isWatered == 1) {

@@ -1,5 +1,6 @@
 package fomt.base.world;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -47,7 +48,7 @@ public class World {
 	public void removeTileFromUpdate(int x, int y)
 	{
 		long key = (long)x | ((long)y << 32L);
-		fgDayUpdateList.remove(key);
+		removeList.add(key);
 	}
 	
 	public void onDayUpdate()
@@ -62,12 +63,25 @@ public class World {
 			e.getValue().onDayUpdate(this, row, col);
 		}
 		
+		removeFromList(bgDayUpdateList);
+		
 		for (Entry<Long, ITileDayUpdate> e : fgDayUpdateList.entrySet()) {
 			key = e.getKey();
 			row = (int)key;
 			col = (int)(key >> 32);
 			e.getValue().onDayUpdate(this, row, col);
 		}
+		
+		removeFromList(fgDayUpdateList);
+	}
+	
+	public void removeFromList(Map hm)
+	{
+		for(long l: removeList)
+		{
+			hm.remove(l);
+		}
+		removeList.clear();
 	}
 	
 	// --- Get and Set Methods ---
@@ -102,5 +116,6 @@ public class World {
 	
 	Map<Long, ITileDayUpdate> bgDayUpdateList;
 	Map<Long, ITileDayUpdate> fgDayUpdateList;
+	ArrayList<Long> removeList = new ArrayList<Long>();
 	
 }
