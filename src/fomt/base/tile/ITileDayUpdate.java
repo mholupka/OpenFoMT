@@ -1,4 +1,4 @@
-package fomt.base.tiles;
+package fomt.base.tile;
 
 import fomt.base.world.World;
 

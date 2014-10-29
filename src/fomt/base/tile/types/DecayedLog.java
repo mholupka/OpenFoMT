@@ -1,8 +1,9 @@
-package fomt.base.tiles;
+package fomt.base.tile.types;
 
+import fomt.base.tile.TileType;
 import fomt.base.world.World;
 
-public class DecayedLog extends TileType implements ITilePutDown {
+public class DecayedLog extends TileType {
 
 	// --- Instance Fields ---
 	

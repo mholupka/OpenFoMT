@@ -1,4 +1,6 @@
-package fomt.base.tiles;
+package fomt.base.tile;
+
+import fomt.base.tile.types.Log;
 
 public class TileTable {
 

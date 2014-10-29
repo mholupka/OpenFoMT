@@ -1,9 +1,11 @@
-package fomt.base.tiles;
+package fomt.base.tile.types;
 
+import fomt.base.tile.ITileDayUpdate;
 import fomt.base.tile.TileInfo;
+import fomt.base.tile.TileType;
 import fomt.base.world.World;
 
-public class Log extends TileType implements ITileDayUpdate, ITilePutDown {
+public class Log extends TileType implements ITileDayUpdate {
 	
 	// --- Instance Methods ---
 	

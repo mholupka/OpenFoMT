@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
+import fomt.base.tile.ITileDayUpdate;
 import fomt.base.tile.TileInfo;
-import fomt.base.tiles.ITileDayUpdate;
 
 public class World {
 
@@ -98,16 +98,22 @@ public class World {
 		}
 		
 		// new
+
+		long key;
+		int row, col;
 		
 		for (Entry<Long, ITileDayUpdate> e : bgDayUpdateList.entrySet()) {
-			
-			long key = e.getKey();
-			
-			int row = (int)key;
-			int col = (int)(key >> 32);
-			
+			key = e.getKey();
+			row = (int)key;
+			col = (int)(key >> 32);
 			e.getValue().onDayUpdate(this, row, col);
-			
+		}
+		
+		for (Entry<Long, ITileDayUpdate> e : fgDayUpdateList.entrySet()) {
+			key = e.getKey();
+			row = (int)key;
+			col = (int)(key >> 32);
+			e.getValue().onDayUpdate(this, row, col);
 		}
 	}
 	
