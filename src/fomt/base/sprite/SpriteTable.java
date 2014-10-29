@@ -10,6 +10,8 @@ public class SpriteTable {
 		this.sprites = new ArrayList<Sprite>();
 	}
 	
+	// --- Instance Methods ---
+	
 	public void addSprite(Sprite s)
 	{
 		sprites.add(s);
@@ -25,6 +27,6 @@ public class SpriteTable {
 	}
 	
 	// --- Instance Fields ---
-	ArrayList<Sprite> sprites;
+	protected ArrayList<Sprite> sprites;
 	
 }
