@@ -1,7 +1,6 @@
 package fomt.base.tile;
 
-import fomt.base.tile.types.Log;
-import fomt.base.tile.types.PinkCatGrass;
+import fomt.base.tile.types.*;
 
 public class TileTable {
 
@@ -20,10 +19,12 @@ public class TileTable {
 		new Log(), 				// 11
 		null,					// 12
 		null,					// 13
-		new PinkCatGrass(),		// 14
+		null,					// 14
 		null,					// 15
 		null,					// 16
-		null,					// 17
+		new PinkCatGrass(),		// 17
+		new BlueCatGrass(),		// 18
+		new YellowCatGrass(),	// 19
 		
 	};
 

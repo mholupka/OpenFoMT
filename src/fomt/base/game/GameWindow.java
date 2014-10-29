@@ -20,8 +20,7 @@ import fomt.base.sprite.SpriteTable;
 import fomt.base.tile.TileInfo;
 import fomt.base.tile.TileTable;
 import fomt.base.tile.TileType;
-import fomt.base.tile.types.Crop;
-import fomt.base.tile.types.PinkCatGrass;
+import fomt.base.tile.types.*;
 import fomt.base.world.World;
 import fomt.utils.gl.GLRenderer;
 import fomt.utils.gl.GLWindow;
@@ -82,6 +81,10 @@ public class GameWindow extends GLWindow {
 			else if (c == 18 && r > 1 && r < 18) {
 				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 9));
 			}
+			else if ((c == 5 && r ==5 )||(c == 6 && r == 5)||(c == 7 && r == 5))
+			{
+				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 13));
+			}
 			else
 			{
 				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 2));
@@ -92,6 +95,8 @@ public class GameWindow extends GLWindow {
 		});
 
 		TileTable.table[PinkCatGrass.SPRITE_ID].onPutDown(world, 5, 5);
+		TileTable.table[BlueCatGrass.SPRITE_ID].onPutDown(world, 5, 6);
+		TileTable.table[YellowCatGrass.SPRITE_ID].onPutDown(world, 5, 7);
 		
 		//world.addTileToUpdate(5, 5);
 		
@@ -132,10 +137,14 @@ public class GameWindow extends GLWindow {
 			gameSprites.addSprite(new Sprite(14, tex));
 			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/flowerSprout.png"));
 			gameSprites.addSprite(new Sprite(15, tex));
-			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/pinkCatGrassSprout2.png"));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/catGrassSprout2.png"));
 			gameSprites.addSprite(new Sprite(16, tex));
 			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/pinkCatGrass.png"));
 			gameSprites.addSprite(new Sprite(17, tex));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/blueCatGrass.png"));
+			gameSprites.addSprite(new Sprite(18, tex));
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/yellowCatGrass.png"));
+			gameSprites.addSprite(new Sprite(19, tex));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -144,6 +153,8 @@ public class GameWindow extends GLWindow {
 	public void loadCrops()
 	{
 		crops.addCrop((Crop)TileTable.table[PinkCatGrass.SPRITE_ID]);
+		crops.addCrop((Crop)TileTable.table[BlueCatGrass.SPRITE_ID]);
+		crops.addCrop((Crop)TileTable.table[YellowCatGrass.SPRITE_ID]);
 	}
 	
 	public void onTick() 
