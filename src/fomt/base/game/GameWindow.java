@@ -248,10 +248,16 @@ public class GameWindow extends GLWindow {
 	public void render(float f)
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
+		GLRenderer.setColor(1f, 1f, 1f, 1f);
+		
 		worldRenderer.render(camera, world);
 		drawMouseTile();
 		drawClock();
 		drawSpriteTable();
+		
+		GLRenderer.setColor(0, 0, 0, .5f);
+		GLRenderer.drawQuad(0, 0, getWidth(), getHeight());
+		
 	}
 	
 	protected void drawSpriteTable() {
