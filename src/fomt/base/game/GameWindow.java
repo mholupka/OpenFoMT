@@ -228,6 +228,8 @@ public class GameWindow extends GLWindow {
 				TileType type = TileTable.table[gameSpriteSelection];
 				if (type == null) {
 					long data = world.getTileData(mouseRow, mouseCol);
+					data = TileInfo.setMetaData(data,  0);
+					world.removeTileFromUpdate(mouseRow, mouseCol);
 					data = TileInfo.setFGSpriteID(data, gameSpriteSelection);
 					world.setTileData(mouseRow, mouseCol, data);
 				} else {
