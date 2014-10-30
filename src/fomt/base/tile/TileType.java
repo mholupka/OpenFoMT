@@ -9,6 +9,7 @@ public abstract class TileType {
 	public void onPutDown(World world, int row, int col) {
 		long data = world.getTileData(row, col);
 		world.setTileData(row, col, TileInfo.setFGSpriteID(data, getSpriteID()));
+		world.removeTileFromUpdate(row, col);
 	}
 	
 }

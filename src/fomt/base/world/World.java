@@ -56,22 +56,23 @@ public class World {
 		long key;
 		int row, col;
 		
+		removeFromList(bgDayUpdateList);
 		for (Entry<Long, ITileDayUpdate> e : bgDayUpdateList.entrySet()) {
 			key = e.getKey();
 			row = (int)key;
 			col = (int)(key >> 32);
+			
 			e.getValue().onDayUpdate(this, row, col);
 		}
-		
 		removeFromList(bgDayUpdateList);
 		
+		removeFromList(fgDayUpdateList);
 		for (Entry<Long, ITileDayUpdate> e : fgDayUpdateList.entrySet()) {
 			key = e.getKey();
 			row = (int)key;
 			col = (int)(key >> 32);
 			e.getValue().onDayUpdate(this, row, col);
 		}
-		
 		removeFromList(fgDayUpdateList);
 	}
 	
