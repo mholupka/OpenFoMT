@@ -15,17 +15,11 @@ public class Mob {
 	public float getVX() { return vx; }
 	public float getVY() { return vy; }
 	
-	public void onTick() {
-		
-		
-	}
-	
 	// --- Instance Fields ---
 	
 	protected int row, col;
-	
 	protected float x, y;
-	
 	protected float vx, vy;
+	protected float vtx, vty;
 	
 }

@@ -75,6 +75,7 @@ public class World {
 		removeFromList(fgDayUpdateList);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void removeFromList(Map hm)
 	{
 		for(long l: removeList)
