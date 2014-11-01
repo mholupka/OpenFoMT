@@ -47,7 +47,7 @@ public class GameWindow extends GLWindow {
 	{
 		// testing...
 		mob = new Mob(16, 16, new PlayerController(), new BasicPhysics(), new RenderComponent());
-		mob.setHeldItem(new WateringCan());
+		mob.setHeldItem(new WateringCan(5, 80));
 		
 		gameSprites = new SpriteTable();
 		crops = new CropTable();

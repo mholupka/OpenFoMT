@@ -10,13 +10,25 @@ import fomt.base.world.World;
 
 public class WateringCan implements Item {
 	
+	// --- Constructor ---
+	
+	public WateringCan(int capacity, int range) {
+		this.water = 5;
+		this.range = range;
+	}
+	
+	// --- Instance Methods ---
+	
 	@Override
 	public void onUse(World w, Mob m) {
 	
+		if (water == 0)
+			return;
+		
 		TileInfo tile = new TileInfo(0, 0, 0L);
 		
-		final int r0 = m.row - 1, r1 = m.row + 1;
-		final int c0 = m.col - 1, c1 = m.col + 1;
+		final int r0 = m.row - range, r1 = m.row + range;
+		final int c0 = m.col - range, c1 = m.col + range;
 		
 		int fgSpriteID;
 		TileType tileType;
@@ -31,10 +43,8 @@ public class WateringCan implements Item {
 				tileType = TileTable.getTileType(fgSpriteID);
 				
 				// if not a crop, skip (todo clean this shit up)
-				if (fgSpriteID != 14 && fgSpriteID != 15 && !(tileType instanceof Crop))
+				if (fgSpriteID != 14 && fgSpriteID != 15 && fgSpriteID != 16 && !(tileType instanceof Crop))
 					continue;
-				
-				//System.out.println("watered (" + tile.row + " : " + tile.col + ")");
 				
 				Crop.setWatered(tile, true);
 				
@@ -43,6 +53,13 @@ public class WateringCan implements Item {
 			}
 		}
 		
+		--water;
+		
 	}
 
+	// --- Instance Fields ---
+	
+	protected int water;
+	protected int range;
+	
 }
