@@ -21,13 +21,13 @@ public abstract class Crop extends TileType implements ITileDayUpdate {
 		long data = world.getTileData(row, col);
 		
 		data = TileInfo.setFGSpriteID(data, getSpriteForCycle(0));
+		data = TileInfo.setDensity(data, true);
 		
 		int metaData = TileInfo.getMetaData(data);
 		metaData = (metaData & ~0x1) | 1;
 		metaData = (metaData & ~0x1E) | (0 << 1);
 		metaData = (metaData & ~0xE0) | (0 << 5);
 		metaData = (metaData & ~0x3FF00) | (getCropTypeID() << 8);
-		
 		world.setTileData(row, col, TileInfo.setMetaData(data, metaData));
 			
 		world.addTileToUpdate(row, col, this);
