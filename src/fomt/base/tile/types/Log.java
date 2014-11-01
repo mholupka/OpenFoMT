@@ -22,6 +22,8 @@ public class Log extends TileType implements ITileDayUpdate {
 		
 		world.setTileData(row, col, data);
 		
+		//world.setTileData(row, col, TileInfo.setDensity(data, flag))
+		
 		// set metadata (3 days to decay)
 		world.setTileData(row, col, TileInfo.setMetaData(data, 3));
 		

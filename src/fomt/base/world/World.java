@@ -61,10 +61,9 @@ public class World {
 			key = e.getKey();
 			row = (int)key;
 			col = (int)(key >> 32);
-			
 			e.getValue().onDayUpdate(this, row, col);
 		}
-		removeFromList(bgDayUpdateList);
+		removeFromList(bgDayUpdateList); 
 		
 		removeFromList(fgDayUpdateList);
 		for (Entry<Long, ITileDayUpdate> e : fgDayUpdateList.entrySet()) {

@@ -15,6 +15,12 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import fomt.base.crops.CropTable;
+import fomt.base.input.GameInput;
+import fomt.base.input.InputManager;
+import fomt.base.mob.BasicPhysics;
+import fomt.base.mob.Mob;
+import fomt.base.mob.PlayerController;
+import fomt.base.mob.RenderComponent;
 import fomt.base.sprite.Sprite;
 import fomt.base.sprite.SpriteTable;
 import fomt.base.tile.TileInfo;
@@ -34,14 +40,19 @@ public class GameWindow extends GLWindow {
 	
 	}
 
+	Mob mob;
+	
 	public void postSetup()
 	{
+		mob = new Mob(16, 16, new PlayerController(), new BasicPhysics(), new RenderComponent());
+		
 		gameSprites = new SpriteTable();
 		crops = new CropTable();
 		loadSprites();
 		loadCrops();
 		
 		font = new TrueTypeFont(new Font("Times New Roman", Font.ITALIC, 40), true);
+		font16 = new TrueTypeFont(new Font("Times New Roman", Font.ITALIC, 16), true);
 		
 		clock = new Clock(0);
 		camera = new TileCamera(10, 10, getWidth(), getHeight());
@@ -168,6 +179,8 @@ public class GameWindow extends GLWindow {
 		}
 	}
 	
+	InputManager input = new InputManager();
+	
 	public void loadCrops()
 	{
 		crops.addCrop((Crop)TileTable.table[PinkCatGrass.SPRITE_ID]);
@@ -179,6 +192,10 @@ public class GameWindow extends GLWindow {
 	{
 		clock.updateTime();
 		worldRenderer.onTick();
+		
+		input.update();
+		// test
+		mob.onTick(world, input);
 		
 		if (clock.dayChanged())
 		{
@@ -223,6 +240,16 @@ public class GameWindow extends GLWindow {
 			
 			if (Mouse.getEventButtonState())
 				continue;
+			
+			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+				if (Mouse.getEventButton() == 0) {
+					long data = world.getTileData(mouseRow, mouseCol);
+					data = TileInfo.setDensity(data, !TileInfo.isDense(data));
+					System.out.println("ASD");
+					world.setTileData(mouseRow, mouseCol, data);
+				} 
+				continue;
+			}
 			
 			if (Mouse.getEventButton() == 0) {
 				TileType type = TileTable.table[gameSpriteSelection];
@@ -272,6 +299,11 @@ public class GameWindow extends GLWindow {
 		GLRenderer.setColor(1f, 1f, 1f, 1f);
 		
 		worldRenderer.render(camera, world);
+		
+		camera.apply();
+		mob.render(f);
+		camera.unapply();
+		
 		drawMouseTile();
 		drawClock();
 		drawSpriteTable();
@@ -380,6 +412,20 @@ public class GameWindow extends GLWindow {
 		
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		
+		int y = 5;
+		long tile = world.getTileData(mouseRow, mouseCol);
+		TrueTypeFont font = this.font;
+		
+		font.drawString(5f, y, "BG Sprite ID: " + TileInfo.getBGSpriteID(tile));
+		y += 5 + font.getHeight();
+		font.drawString(5f, y, "FG Sprite ID: " + TileInfo.getFGSpriteID(tile));
+		y += 5 + font.getHeight();
+		font.drawString(5f, y, "FG Sprite ID: " + TileInfo.getFGSpriteID(tile));
+		y += 5 + font.getHeight();
+		font.drawString(5f, y, "Density: " + TileInfo.isDense(tile));
+		y += 5 + font.getHeight();
+		font.drawString(5f, y, "Metadata: 0x" + Integer.toHexString(TileInfo.getMetaData(tile)));
+		
 	}
 	
 	protected void drawClock()
@@ -396,7 +442,7 @@ public class GameWindow extends GLWindow {
 	ICamera camera;
 	World world;
 	WorldRenderer worldRenderer;
-	TrueTypeFont font;
+	TrueTypeFont font, font16;
 	private int mouseRow, mouseCol;
 	private int gameSpriteSelection;
 	
