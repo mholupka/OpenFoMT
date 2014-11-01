@@ -4,6 +4,12 @@ import fomt.base.tile.types.*;
 
 public class TileTable {
 
+	public static TileType getTileType(int id) {
+		if (id < 0 || id >= table.length)
+			return null;
+		return table[id];
+	}
+	
 	public static final TileType[] table = {
 		null,					// 0
 		null,					// 1

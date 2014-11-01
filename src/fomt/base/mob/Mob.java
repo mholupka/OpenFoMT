@@ -1,6 +1,7 @@
 package fomt.base.mob;
 
 import fomt.base.input.InputManager;
+import fomt.base.item.Item;
 import fomt.base.world.World;
 
 
@@ -21,8 +22,16 @@ public class Mob {
 	
 	// --- Instance Methods ---
 	
+	public Item getHeldItem() {
+		return heldItem;
+	}
+	
+	public void setHeldItem(Item item) {
+		heldItem = item;
+	}
+	
 	public void onTick(World world, InputManager input) {
-		control.update(this, input);
+		control.update(world, this, input);
 		physics.update(world, this);
 	}
 	
@@ -40,5 +49,7 @@ public class Mob {
 	protected IMobController control;
 	protected IPhysicsComponent physics;
 	protected IRenderComponent renderer;
+	
+	protected Item heldItem;
 	
 }

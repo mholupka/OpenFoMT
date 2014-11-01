@@ -17,6 +17,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 import fomt.base.crops.CropTable;
 import fomt.base.input.GameInput;
 import fomt.base.input.InputManager;
+import fomt.base.item.types.WateringCan;
 import fomt.base.mob.BasicPhysics;
 import fomt.base.mob.Mob;
 import fomt.base.mob.PlayerController;
@@ -44,7 +45,9 @@ public class GameWindow extends GLWindow {
 	
 	public void postSetup()
 	{
+		// testing...
 		mob = new Mob(16, 16, new PlayerController(), new BasicPhysics(), new RenderComponent());
+		mob.setHeldItem(new WateringCan());
 		
 		gameSprites = new SpriteTable();
 		crops = new CropTable();

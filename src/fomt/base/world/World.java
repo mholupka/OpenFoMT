@@ -91,16 +91,36 @@ public class World {
 		return tileData;
 	}
 	
+	public final boolean isValidTileCoord(int row, int col) {
+		return row >= 0 && col >= 0 && row < height && col < width;
+	}
 	public final long getTileData(int row, int col) { 
 		if (row < 0 || row >= height || col < 0 || col >= width)
 			throw new IllegalArgumentException();
 		return this.tileData[row * width + col]; 	
+	}
+	public final boolean getTileData(int row, int col, TileInfo t) {
+		
+		if (row < 0 || row >= height || col < 0 || col >= width)
+			return false;
+		
+		t.row = row;
+		t.col = col;
+		t.data = this.tileData[row * width + col];
+		
+		return true;
+	
 	}
 	
 	public final void setTileData(int row, int col, long tileData) {
 		if (row < 0 || row >= height || col < 0 || col >= width)
 			throw new IllegalArgumentException();
 		this.tileData[row * width + col] = tileData;
+	}
+	public final void setTileData(TileInfo tile) {
+		if (tile.row < 0 || tile.row >= height || tile.col < 0 || tile.col >= width)
+			throw new IllegalArgumentException();
+		this.tileData[tile.row * width + tile.col] = tile.data;
 	}
 	
 	public final String getName() { return name; }

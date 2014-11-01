@@ -10,9 +10,45 @@ public class TileInfo {
 		this.data = data;
 	}
 	
+	// --- Instance Methods ---
+	
+	public int getFGSpriteID() {
+		return (int)data & FG_SPRITE_MASK_32;
+	}
+	
+	public int getBGSpriteID() {
+		return ((int)data & BG_SPRITE_MASK_32) >> 16;
+	}
+	
+	public boolean isDense() {
+		return ((int)(data >> 32L) & DENSITY_MASK_32) != 0;
+	}
+	
+	public int getMetaData() {
+		return (int)(data >> 32L) & METADATA_MASK_32;
+	}
+	
+	public void setFGSpriteID(int id) {
+		data = (data & ~FG_SPRITE_MASK) | (id & 0xFFFF);
+	}
+	
+	public void setBGSpriteID(int id) {
+		data = (data & ~BG_SPRITE_MASK) | ((id & 0xFFFF) << 16);
+	}
+	
+	public void setDensity(boolean flag) {
+		data = (data & ~DENSITY_MASK) | (flag ? 0x8000000000000000L : 0L);
+	}
+	
+	public void setMetaData(int metadata) {
+		data = (data & ~METADATA_MASK) | ((long)(metadata & METADATA_MASK_32) << 32L);
+	}
+	
+	// --- Instance Fields ---
+		
 	public int row, col;
 	public long data;
-	
+
 	// --- Static Methods ---
 	
 	public static int getFGSpriteID(long tileData) {

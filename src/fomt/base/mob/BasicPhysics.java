@@ -19,8 +19,6 @@ public class BasicPhysics implements IPhysicsComponent {
 		
 		int r, c, d, n;
 		
-		
-		
 		if (m.vx != 0) {
 			n = (int)m.x + (m.vx >= 0 ? 16 : -16);
 			if (n < 16) {
