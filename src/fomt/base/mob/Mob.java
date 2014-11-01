@@ -45,6 +45,7 @@ public class Mob {
 	public float x, y;
 	public float vx, vy;
 	public float sx, sy;
+	public int facing;
 	
 	protected IMobController control;
 	protected IPhysicsComponent physics;

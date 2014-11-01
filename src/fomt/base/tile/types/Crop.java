@@ -1,5 +1,6 @@
 package fomt.base.tile.types;
 
+import fomt.base.mob.Mob;
 import fomt.base.tile.ITileDayUpdate;
 import fomt.base.tile.TileInfo;
 import fomt.base.tile.TileType;
@@ -31,6 +32,22 @@ public abstract class Crop extends TileType implements ITileDayUpdate {
 		world.setTileData(row, col, TileInfo.setMetaData(data, metaData));
 			
 		world.addTileToUpdate(row, col, this);
+		
+	}
+	
+	@Override
+	public void onInteract(World world, Mob mob, int row, int col) {
+		
+		long data = world.getTileData(row, col);
+	
+		int metadata = TileInfo.getMetaData(data);
+		int currCycle = (metadata &0xE0) >> 5;
+		
+		// if crop has finished its cycles
+		if (currCycle == getNumCycles()) {
+			data = TileInfo.setFGSpriteID(data, 0);
+			world.setTileData(row, col, data);
+		}
 		
 	}
 	

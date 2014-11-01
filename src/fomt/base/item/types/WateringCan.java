@@ -22,8 +22,8 @@ public class WateringCan implements Item {
 	@Override
 	public void onUse(World w, Mob m) {
 	
-		if (water == 0)
-			return;
+		//if (water == 0)
+		//	return;
 		
 		TileInfo tile = new TileInfo(0, 0, 0L);
 		
@@ -42,11 +42,14 @@ public class WateringCan implements Item {
 				fgSpriteID = tile.getFGSpriteID();
 				tileType = TileTable.getTileType(fgSpriteID);
 				
+				System.out.println(fgSpriteID);
+				
 				// if not a crop, skip (todo clean this shit up)
 				if (fgSpriteID != 14 && fgSpriteID != 15 && fgSpriteID != 16 && !(tileType instanceof Crop))
 					continue;
 				
 				Crop.setWatered(tile, true);
+				System.out.println("WATERED BOYS");
 				
 				w.setTileData(tile);
 				

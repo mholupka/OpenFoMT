@@ -5,6 +5,9 @@ import org.lwjgl.input.Keyboard;
 import fomt.base.input.GameInput;
 import fomt.base.input.InputManager;
 import fomt.base.item.Item;
+import fomt.base.tile.TileInfo;
+import fomt.base.tile.TileTable;
+import fomt.base.tile.TileType;
 import fomt.base.world.World;
 
 public class PlayerController implements IMobController {
@@ -34,6 +37,41 @@ public class PlayerController implements IMobController {
 			}
 		}
 		
+		if (Keyboard.isKeyDown(Keyboard.KEY_G)) {
+			
+			int trgtRow, trgtCol;
+			
+			switch(m.facing) {
+			case Direction.UP:
+				trgtRow = m.row - 1;
+				trgtCol = m.col;
+				break;
+			case Direction.DOWN:
+				trgtRow = m.row + 1;
+				trgtCol = m.col;
+				break;
+			case Direction.LEFT:
+				trgtRow = m.row;
+				trgtCol = m.col - 1;
+				break;
+			case Direction.RIGHT:
+				trgtRow = m.row;
+				trgtCol = m.col + 1;
+				break;
+			default:
+				return;
+			}
+			
+			int trgtFGSpriteID = TileInfo.getFGSpriteID(w.getTileData(trgtRow, trgtCol));
+			
+			TileType tile = TileTable.getTileType(trgtFGSpriteID);
+			
+			if (tile != null) {
+				tile.onInteract(w, m, trgtRow, trgtCol);
+			}
+			
+		}
+		
 	}
 	
 	private void handleMovement(Mob m, InputManager input) {
@@ -44,18 +82,22 @@ public class PlayerController implements IMobController {
 		case GameInput.MOVE_UP:
 			m.sy = -SPEED;
 			m.sx = 0;
+			m.facing = Direction.UP;
 			break;
 		case GameInput.MOVE_DOWN:
 			m.sy = SPEED;
 			m.sx = 0;
+			m.facing = Direction.DOWN;
 			break;
 		case GameInput.MOVE_RIGHT:
 			m.sx = SPEED;
 			m.sy = 0;
+			m.facing = Direction.RIGHT;
 			break;
 		case GameInput.MOVE_LEFT:
 			m.sx = -SPEED;
 			m.sy = 0;
+			m.facing = Direction.LEFT;
 			break;	
 		default:
 			m.sx = 0;
