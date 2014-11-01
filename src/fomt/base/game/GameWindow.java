@@ -29,6 +29,7 @@ import fomt.base.tile.TileTable;
 import fomt.base.tile.TileType;
 import fomt.base.tile.types.*;
 import fomt.base.world.World;
+import fomt.base.world.WorldIO;
 import fomt.utils.gl.GLRenderer;
 import fomt.utils.gl.GLWindow;
 import fomt.utils.gl.ICamera;
@@ -223,6 +224,22 @@ public class GameWindow extends GLWindow {
 			case Keyboard.KEY_D:
 				camera.left();
 				break;
+			}
+		}
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_O)) {
+			try {
+				WorldIO.save(world);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_L)) {
+			try {
+				world = WorldIO.load("Test Farm");
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 		

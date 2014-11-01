@@ -1,5 +1,6 @@
 package fomt.base.world;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,8 +10,10 @@ import java.util.function.Consumer;
 import fomt.base.tile.ITileDayUpdate;
 import fomt.base.tile.TileInfo;
 
-public class World {
-
+public class World implements Serializable {
+	
+	private static final long serialVersionUID = -7658444781209201667L;
+	
 	// --- Constructors ---
 	
 	public World(String name, int width, int height) {

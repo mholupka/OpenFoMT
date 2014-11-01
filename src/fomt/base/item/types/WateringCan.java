@@ -41,15 +41,12 @@ public class WateringCan implements Item {
 				
 				fgSpriteID = tile.getFGSpriteID();
 				tileType = TileTable.getTileType(fgSpriteID);
-				
-				System.out.println(fgSpriteID);
-				
+					
 				// if not a crop, skip (todo clean this shit up)
 				if (fgSpriteID != 14 && fgSpriteID != 15 && fgSpriteID != 16 && !(tileType instanceof Crop))
 					continue;
 				
 				Crop.setWatered(tile, true);
-				System.out.println("WATERED BOYS");
 				
 				w.setTileData(tile);
 				
