@@ -6,7 +6,7 @@ import fomt.base.world.World;
 
 public class BasicPhysics implements IPhysicsComponent {
 
-	protected static final float MAX_ACCEL = .09f;
+	protected static final float MAX_ACCEL = .1f;
 	protected static final float ONE_OVER_32 = 1f / 32f;
 	
 	private boolean isInvalidTileCoord(int row, int col, World w) {
@@ -17,30 +17,41 @@ public class BasicPhysics implements IPhysicsComponent {
 		
 		boolean collision = false;
 		
-		int oldRow = m.row, oldCol = m.col;
-		float nextX = m.x + m.vx, nextY = m.y + m.vy;
-		float tx0, ty0, tx1, ty1;
-		int r, c;
+		int r, c, d;
 		
-		c = (int)nextX + m.vx >= 0 ? 16 : -16;
-	
-		r = (int)m.y - 15;
+		c = (int)(m.x + (m.vx >= 0 ? 16 : -16)) / 32;
+		d = m.vx >= 0 ? -1 : 1;
+		
+		r = (int)(m.y - 15) / 32;		
 		if (isInvalidTileCoord(r, c, w) || TileInfo.isDense(w.getTileData(r, c))) {
-			System.out.println("OH NO");
-			
-			
+			m.vx = 0;
+			m.x = 16 + (c+d) * 32;
+			collision = true;
 		}
-		
-		r = (int)m.y + 15;
-		if (isInvalidTileCoord(r, c, w) || TileInfo.isDense(w.getTileData(r, c))) {			
-			System.out.println("OH NO");
-			
-		}
-		
 
+		r = (int)(m.y + 15) / 32;
+		if (isInvalidTileCoord(r, c, w) || TileInfo.isDense(w.getTileData(r, c))) {			
+			m.vx = 0;
+			m.x = 16 + (c+d) * 32;
+			collision = true;
+		}
 		
+		r = (int)(m.y + (m.vy >= 0 ? 16 : -16)) / 32;
+		d = m.vy >= 0 ? -1 : 1;
 		
-		// TODO - Y
+		c = (int)(m.x - 15) / 32;		
+		if (isInvalidTileCoord(r, c, w) || TileInfo.isDense(w.getTileData(r, c))) {
+			m.vy = 0;
+			m.y = 16 + (r+d) * 32;
+			collision = true;
+		}
+		
+		c = (int)(m.x + 15) / 32;	
+		if (isInvalidTileCoord(r, c, w) || TileInfo.isDense(w.getTileData(r, c))) {			
+			m.vy = 0;
+			m.y = 16 + (r+d) * 32;
+			collision = true;
+		}
 		
 		return collision;
 		
@@ -48,10 +59,6 @@ public class BasicPhysics implements IPhysicsComponent {
 	
 	@Override
 	public void update(World w, Mob m) {
-		
-		if (checkCollisions(w, m)) {
-			return;
-		}
 		
 		float ax = m.sx - m.vx;
 		float ay = m.sy - m.vy;
@@ -66,6 +73,8 @@ public class BasicPhysics implements IPhysicsComponent {
 		
 		m.x += m.vx;
 		m.y += m.vy;
+		
+		checkCollisions(w, m);
 		
 		m.row = (int)m.y / 32;
 		m.col = (int)m.x / 32;
