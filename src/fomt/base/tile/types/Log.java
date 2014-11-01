@@ -19,10 +19,11 @@ public class Log extends TileType implements ITileDayUpdate {
 		
 		long data = world.getTileData(row, col);
 		data = TileInfo.setFGSpriteID(data, getSpriteID());
+		data = TileInfo.setDensity(data, true);
 		
 		world.setTileData(row, col, data);
 		
-		//world.setTileData(row, col, TileInfo.setDensity(data, flag))
+		world.setTileData(row, col, data);
 		
 		// set metadata (3 days to decay)
 		world.setTileData(row, col, TileInfo.setMetaData(data, 3));
