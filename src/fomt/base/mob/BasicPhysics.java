@@ -6,7 +6,7 @@ import fomt.base.world.World;
 
 public class BasicPhysics implements IPhysicsComponent {
 
-	protected static final float MAX_ACCEL = .1f;
+	protected static final float MAX_ACCEL = .3f;
 	protected static final float ONE_OVER_32 = 1f / 32f;
 	
 	private boolean isInvalidTileCoord(int row, int col, World w) {
@@ -27,14 +27,14 @@ public class BasicPhysics implements IPhysicsComponent {
 			c = n / 32;
 			d = m.vx >= 0 ? -1 : 1;
 			
-			r = (int)(m.y - 13) / 32;		
+			r = (int)(m.y - 11) / 32;		
 			if (isInvalidTileCoord(r, c, w) || TileInfo.isDense(w.getTileData(r, c))) {
 				m.vx = 0;
 				m.x = 16 + (c+d) * 32;
 				collision = true;
 			}
 
-			r = (int)(m.y + 13) / 32;
+			r = (int)(m.y + 11) / 32;
 			if (isInvalidTileCoord(r, c, w) || TileInfo.isDense(w.getTileData(r, c))) {			
 				m.vx = 0;
 				m.x = 16 + (c+d) * 32;
@@ -50,14 +50,14 @@ public class BasicPhysics implements IPhysicsComponent {
 			r = n / 32;
 			d = m.vy >= 0 ? -1 : 1;
 			
-			c = (int)(m.x - 13) / 32;		
+			c = (int)(m.x - 11) / 32;		
 			if (isInvalidTileCoord(r, c, w) || TileInfo.isDense(w.getTileData(r, c))) {
 				m.vy = 0;
 				m.y = 16 + (r+d) * 32;
 				collision = true;
 			}
 			
-			c = (int)(m.x + 13) / 32;	
+			c = (int)(m.x + 11) / 32;	
 			if (isInvalidTileCoord(r, c, w) || TileInfo.isDense(w.getTileData(r, c))) {			
 				m.vy = 0;
 				m.y = 16 + (r+d) * 32;
