@@ -2,6 +2,7 @@ package fomt.base.mob;
 
 import fomt.base.input.InputManager;
 import fomt.base.item.Item;
+import fomt.base.sprite.SpriteTable;
 import fomt.base.world.World;
 
 
@@ -35,8 +36,8 @@ public class Mob {
 		physics.update(world, this);
 	}
 	
-	public void render(float f) {
-		renderer.render(this, f);
+	public void render(SpriteTable sprites, float f) {
+		renderer.render(sprites, this, f);
 	}
 	
 	// --- Instance Fields ---

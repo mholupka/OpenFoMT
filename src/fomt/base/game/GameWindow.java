@@ -52,6 +52,7 @@ public class GameWindow extends GLWindow {
 		
 		gameSprites = new SpriteTable();
 		crops = new CropTable();
+	
 		loadSprites();
 		loadCrops();
 		
@@ -178,6 +179,10 @@ public class GameWindow extends GLWindow {
 			gameSprites.addSprite(new Sprite(23, tex));
 			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/grassCornerTopLeftOuter.png"));
 			gameSprites.addSprite(new Sprite(24, tex));
+			
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/player.png"));
+			gameSprites.addSprite(new Sprite(25, tex));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -321,7 +326,7 @@ public class GameWindow extends GLWindow {
 		worldRenderer.render(camera, world);
 		
 		camera.apply();
-		mob.render(f);
+		mob.render(gameSprites, f);
 		camera.unapply();
 		
 		drawMouseTile();

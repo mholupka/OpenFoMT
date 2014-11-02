@@ -1,29 +1,53 @@
 package fomt.base.mob;
 
+import fomt.base.sprite.SpriteTable;
 import fomt.utils.gl.GLRenderer;
 
 public class RenderComponent implements IRenderComponent {
 
+	private static float[] offsets = new float[] { 0f, .125f, .250f, .375f, .500f, .625f, .750f, .875f, 1f };
+	private static int index = 1;
+	private static int state = 0;
+	private long l;
+	
 	@Override
-	public void render(Mob m, float f) {
-		
-		float lx = m.x - m.vx - 16f;
-		float ly = m.y - m.vy - 16f;
+	public void render(SpriteTable sprites, Mob m, float f) {
+			
+		float lx = m.x - m.vx - 32f;
+		float ly = m.y - m.vy - 48f;
 		
 		lx += f * m.vx;
 		ly += f * m.vy;
 		
-		if (m.facing == Direction.DOWN)
-			GLRenderer.setColor(0, 0, 0, 1);
-		if (m.facing == Direction.UP)
-			GLRenderer.setColor(255, 0, 0, 1);
-		if (m.facing == Direction.LEFT)
-			GLRenderer.setColor(0, 255, 0, 1);
-		if (m.facing == Direction.RIGHT)
-			GLRenderer.setColor(0, 0, 255, 1);
+		switch (m.facing) {
+		case Direction.DOWN:
+			state = 0;
+			break;
+		case Direction.UP:
+			state = 3;
+			break;
+		case Direction.LEFT:
+			state = 2;
+			break;
+		case Direction.RIGHT:
+			state = 1;
+			break;
+		}
 		
-		GLRenderer.drawQuad(lx, ly - 32, lx + 32, ly + 32);
+		if (m.sx != 0 || m.sy != 0) {
+			long l1 = System.currentTimeMillis();
+			if (l1 - l > 190) {
+				index = (index + 1) % 4;
+				l = l1;
+			}		
+		} else {
+			index = 0;
+		}
 		
+		GLRenderer.setColor(1f, 1f, 1f, 1f);
+		sprites.getSprite(25).getTexture().bind();
+		GLRenderer.drawTexturedQuad(lx, ly, lx + 64, ly + 64, offsets[index], offsets[state], offsets[index + 1], offsets[state + 1]);
+			
 	}
 
 }
