@@ -17,6 +17,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 import fomt.base.crops.CropTable;
 import fomt.base.input.GameInput;
 import fomt.base.input.InputManager;
+import fomt.base.item.types.Hoe;
 import fomt.base.item.types.WateringCan;
 import fomt.base.mob.BasicPhysics;
 import fomt.base.mob.Mob;
@@ -49,6 +50,7 @@ public class GameWindow extends GLWindow {
 		// testing...
 		mob = new Mob(16, 16, new PlayerController(), new BasicPhysics(), new RenderComponent());
 		mob.setHeldItem(new WateringCan(5, 1));
+		mob.setSecondaryItem(new Hoe(1));
 		
 		gameSprites = new SpriteTable();
 		crops = new CropTable();
@@ -182,6 +184,9 @@ public class GameWindow extends GLWindow {
 			
 			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/player.png"));
 			gameSprites.addSprite(new Sprite(25, tex));
+			
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/tilledFarmDirtWatered.png"));
+			gameSprites.addSprite(new Sprite(26, tex));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -445,11 +450,11 @@ public class GameWindow extends GLWindow {
 		y += 5 + font.getHeight();
 		font.drawString(5f, y, "FG Sprite ID: " + TileInfo.getFGSpriteID(tile));
 		y += 5 + font.getHeight();
-		font.drawString(5f, y, "FG Sprite ID: " + TileInfo.getFGSpriteID(tile));
-		y += 5 + font.getHeight();
 		font.drawString(5f, y, "Density: " + TileInfo.isDense(tile));
 		y += 5 + font.getHeight();
 		font.drawString(5f, y, "Metadata: 0x" + Integer.toHexString(TileInfo.getMetaData(tile)));
+		y += 10 + font.getHeight();
+		font.drawString(5f, y, "HeldItem: " + mob.getHeldItem().getType());
 		
 	}
 	

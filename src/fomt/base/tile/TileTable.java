@@ -36,6 +36,8 @@ public class TileTable {
 		null,					// 22
 		null,					// 23
 		null,					// 24
+		null,					// 25
+		null,					// 26
 		
 	};
 

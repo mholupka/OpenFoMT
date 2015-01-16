@@ -7,4 +7,6 @@ public interface Item {
 
 	public void onUse(World w, Mob m);
 	
+	public String getType();
+	
 }

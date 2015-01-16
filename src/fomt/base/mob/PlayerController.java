@@ -36,6 +36,12 @@ public class PlayerController implements IMobController {
 				item.onUse(w, m);		
 			}
 		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_2)) {
+			
+			Item sItem = m.getHeldItem();
+			m.setHeldItem(m.getSecondaryItem());
+			m.setSecondaryItem(sItem);
+		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_G)) {
 			

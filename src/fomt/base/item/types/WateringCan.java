@@ -31,6 +31,7 @@ public class WateringCan implements Item {
 		final int c0 = m.col - range, c1 = m.col + range;
 		
 		int fgSpriteID;
+		int bgSpriteID;
 		TileType tileType;
 		
 		for (int i = r0; i <= r1; ++i) {
@@ -40,13 +41,18 @@ public class WateringCan implements Item {
 					continue;
 				
 				fgSpriteID = tile.getFGSpriteID();
+
+				bgSpriteID = tile.getBGSpriteID();
 				tileType = TileTable.getTileType(fgSpriteID);
 					
-				// if not a crop, skip (todo clean this shit up)
-				if (fgSpriteID != 14 && fgSpriteID != 15 && fgSpriteID != 16 && !(tileType instanceof Crop))
+				// if a tilled earth tile
+				if (bgSpriteID != 13)
 					continue;
 				
-				Crop.setWatered(tile, true);
+				if (fgSpriteID == 14 && fgSpriteID != 15 && fgSpriteID != 16 && !(tileType instanceof Crop))
+					Crop.setWatered(tile, true);
+				
+				tile.setBGSpriteID(26);
 				
 				w.setTileData(tile);
 				
@@ -55,6 +61,11 @@ public class WateringCan implements Item {
 		
 		--water;
 		
+	}
+	
+	public String getType()
+	{
+		return "Watering Can";
 	}
 
 	// --- Instance Fields ---

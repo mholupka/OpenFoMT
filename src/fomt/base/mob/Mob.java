@@ -31,6 +31,22 @@ public class Mob {
 		heldItem = item;
 	}
 	
+	public Item getSecondaryItem() {
+		return secondaryItem;
+	}
+	
+	public void setSecondaryItem(Item item) {
+		secondaryItem = item;
+	}
+	
+	public Item getThirdItem() {
+		return thirdItem;
+	}
+	
+	public void setThirdItem(Item item) {
+		thirdItem = item;
+	}
+	
 	public void onTick(World world, InputManager input) {
 		control.update(world, this, input);
 		physics.update(world, this);
@@ -53,5 +69,7 @@ public class Mob {
 	protected IRenderComponent renderer;
 	
 	protected Item heldItem;
+	protected Item secondaryItem;
+	protected Item thirdItem;
 	
 }

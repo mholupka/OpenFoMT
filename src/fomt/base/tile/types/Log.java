@@ -5,6 +5,8 @@ import fomt.base.tile.TileInfo;
 import fomt.base.tile.TileType;
 import fomt.base.world.World;
 
+import java.util.Random;
+
 public class Log extends TileType implements ITileDayUpdate {
 	
 	// --- Instance Methods ---
@@ -26,7 +28,7 @@ public class Log extends TileType implements ITileDayUpdate {
 		world.setTileData(row, col, data);
 		
 		// set metadata (3 days to decay)
-		world.setTileData(row, col, TileInfo.setMetaData(data, 3));
+		world.setTileData(row, col, TileInfo.setMetaData(data, rng.nextInt(4)+3));
 		
 		// add this tile to the update list
 		world.addTileToUpdate(row, col, this);
@@ -68,5 +70,7 @@ public class Log extends TileType implements ITileDayUpdate {
 	// --- Static Fields ---
 	
 	public static final int SPRITE_ID = 11;
+	
+	public static final Random rng = new Random();
 	
 }
