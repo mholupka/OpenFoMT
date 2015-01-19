@@ -31,6 +31,14 @@ public class Mob {
 		heldItem = item;
 	}
 	
+	public Item getPrimaryItem() {
+		return primaryItem;
+	}
+	
+	public void setPrimaryItem(Item item) {
+		primaryItem = item;
+	}
+	
 	public Item getSecondaryItem() {
 		return secondaryItem;
 	}
@@ -69,6 +77,7 @@ public class Mob {
 	protected IRenderComponent renderer;
 	
 	protected Item heldItem;
+	protected Item primaryItem;
 	protected Item secondaryItem;
 	protected Item thirdItem;
 	

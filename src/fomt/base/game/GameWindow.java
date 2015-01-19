@@ -18,6 +18,7 @@ import fomt.base.crops.CropTable;
 import fomt.base.input.GameInput;
 import fomt.base.input.InputManager;
 import fomt.base.item.types.Hoe;
+import fomt.base.item.types.Seeds;
 import fomt.base.item.types.WateringCan;
 import fomt.base.mob.BasicPhysics;
 import fomt.base.mob.Mob;
@@ -50,7 +51,9 @@ public class GameWindow extends GLWindow {
 		// testing...
 		mob = new Mob(16, 16, new PlayerController(), new BasicPhysics(), new RenderComponent());
 		mob.setHeldItem(new WateringCan(5, 1));
+		mob.setPrimaryItem(new WateringCan(5, 1));
 		mob.setSecondaryItem(new Hoe(1));
+		mob.setThirdItem(new Seeds(0));
 		
 		gameSprites = new SpriteTable();
 		crops = new CropTable();
