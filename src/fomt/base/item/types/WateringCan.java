@@ -49,7 +49,7 @@ public class WateringCan implements Item {
 				if (bgSpriteID != 13)
 					continue;
 				
-				if (fgSpriteID == 14 && fgSpriteID != 15 && fgSpriteID != 16 && !(tileType instanceof Crop))
+				if ((fgSpriteID == 14 || fgSpriteID == 15 || fgSpriteID == 16) && !(tileType instanceof Crop))
 					Crop.setWatered(tile, true);
 				
 				tile.setBGSpriteID(26);

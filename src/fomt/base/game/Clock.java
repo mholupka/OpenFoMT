@@ -43,7 +43,7 @@ public class Clock {
 	public void updateTime()
 	{
 		ticks += 1;
-		if (ticks == 500)
+		if (ticks == 50)
 		{
 			if (time == 1430)
 			{

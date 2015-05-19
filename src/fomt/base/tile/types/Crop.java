@@ -61,9 +61,9 @@ public abstract class Crop extends TileType implements ITileDayUpdate {
 		//int cropType = (metadata &0x3FF00) >> 8;
 		int currCycle = (metadata &0xE0) >> 5;
 		
-		if (currCycle == getNumCycles()) {
-			world.removeTileFromUpdate(row, col);
-		} else {
+		//if (currCycle == getNumCycles()) {
+		//	world.removeTileFromUpdate(row, col);
+		//} else {
 			if (isWatered == 1) {
 				
 				int daysInCycle = (metadata &0x1E) >> 1;
@@ -84,7 +84,7 @@ public abstract class Crop extends TileType implements ITileDayUpdate {
 				world.setTileData(row, col, data);
 				
 			}
-		}
+		//}
 
 	}
 	
