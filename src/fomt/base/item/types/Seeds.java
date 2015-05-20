@@ -24,7 +24,7 @@ public class Seeds implements Item {
 	@Override
 	public void onUse(World w, Mob m) {
 		
-TileInfo tile = new TileInfo(0, 0, 0L);
+		TileInfo tile = new TileInfo(0, 0, 0L);
 		
 		final int r0 = m.row - range, r1 = m.row + range;
 		final int c0 = m.col - range, c1 = m.col + range;
@@ -54,19 +54,24 @@ TileInfo tile = new TileInfo(0, 0, 0L);
 					//todo properly
 					if(this.type == 0) {
 						Random r = new Random();
-						int a = r.nextInt(10);
-						if(a <= 5){
+						int a = r.nextInt(1000);
+						if(a <= 500){
 							data = TileInfo.setFGSpriteID(w.getTileData(i, j), 17);
 							tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
 							tTy.onPutDown(w, i, j);
 						}
-						else if(a <= 8){
+						else if(a <= 800){
 							data = TileInfo.setFGSpriteID(w.getTileData(i, j), 18);
 							tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
 							tTy.onPutDown(w, i, j);
 						}
-						else{
+						else if(a <= 998){
 							data = TileInfo.setFGSpriteID(w.getTileData(i, j), 19);
+							tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
+							tTy.onPutDown(w, i, j);
+						}
+						else{
+							data = TileInfo.setFGSpriteID(w.getTileData(i, j), 27);
 							tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
 							tTy.onPutDown(w, i, j);
 						}

@@ -6,6 +6,7 @@ import static org.lwjgl.opengl.GL11.glClear;
 import java.awt.Font;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -110,22 +111,37 @@ public class GameWindow extends GLWindow {
 				data = TileInfo.setBGSpriteID(data, 2);
 				world.setTileData(r, c, TileInfo.setFGSpriteID(data, 9));
 			}
-			else if ((c == 5 && r ==5 )||(c == 6 && r == 5)||(c == 7 && r == 5))
-			{
-				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 13));
-			}
 			else
 			{
-				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 2));
+				TileType tTy;
+				Random rand = new Random();
+				int a = rand.nextInt(1000);
+				if(a <= 500){
+					data = TileInfo.setFGSpriteID(world.getTileData(r, c), 17);
+					tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
+					tTy.onPutDown(world, r, c);
+				}
+				else if(a <= 800){
+					data = TileInfo.setFGSpriteID(world.getTileData(r, c), 18);
+					tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
+					tTy.onPutDown(world, r, c);
+				}
+				else if(a <= 998){
+					data = TileInfo.setFGSpriteID(world.getTileData(r, c), 19);
+					tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
+					tTy.onPutDown(world, r, c);
+				}
+				else{
+					data = TileInfo.setFGSpriteID(world.getTileData(r, c), 27);
+					tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
+					tTy.onPutDown(world, r, c);
+				}
+				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 13));
 			}
 			
 			data = world.getTileData(r, c);
 			
 		});
-
-		TileTable.table[PinkCatGrass.SPRITE_ID].onPutDown(world, 5, 5);
-		TileTable.table[BlueCatGrass.SPRITE_ID].onPutDown(world, 5, 6);
-		TileTable.table[YellowCatGrass.SPRITE_ID].onPutDown(world, 5, 7);
 		
 		//world.addTileToUpdate(5, 5);
 		
@@ -191,6 +207,9 @@ public class GameWindow extends GLWindow {
 			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/tilledFarmDirtWatered.png"));
 			gameSprites.addSprite(new Sprite(26, tex));
 			
+			tex = TextureLoader.getTexture("PNG", new FileInputStream("res/sprites/test/multiCatGrass.png"));
+			gameSprites.addSprite(new Sprite(27, tex));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -203,6 +222,7 @@ public class GameWindow extends GLWindow {
 		crops.addCrop((Crop)TileTable.table[PinkCatGrass.SPRITE_ID]);
 		crops.addCrop((Crop)TileTable.table[BlueCatGrass.SPRITE_ID]);
 		crops.addCrop((Crop)TileTable.table[YellowCatGrass.SPRITE_ID]);
+		crops.addCrop((Crop)TileTable.table[MultiCatGrass.SPRITE_ID]);
 	}
 	
 	public void onTick() 
@@ -449,15 +469,15 @@ public class GameWindow extends GLWindow {
 		long tile = world.getTileData(mouseRow, mouseCol);
 		TrueTypeFont font = this.font;
 		
-		font.drawString(5f, y, "BG Sprite ID: " + TileInfo.getBGSpriteID(tile));
+		//font.drawString(5f, y, "BG Sprite ID: " + TileInfo.getBGSpriteID(tile));
 		y += 5 + font.getHeight();
-		font.drawString(5f, y, "FG Sprite ID: " + TileInfo.getFGSpriteID(tile));
+		//font.drawString(5f, y, "FG Sprite ID: " + TileInfo.getFGSpriteID(tile));
 		y += 5 + font.getHeight();
-		font.drawString(5f, y, "Density: " + TileInfo.isDense(tile));
+		//font.drawString(5f, y, "Density: " + TileInfo.isDense(tile));
 		y += 5 + font.getHeight();
-		font.drawString(5f, y, "Metadata: 0x" + Integer.toHexString(TileInfo.getMetaData(tile)));
+		//font.drawString(5f, y, "Metadata: 0x" + Integer.toHexString(TileInfo.getMetaData(tile)));
 		y += 10 + font.getHeight();
-		font.drawString(5f, y, "HeldItem: " + mob.getHeldItem().getType());
+		//font.drawString(5f, y, "HeldItem: " + mob.getHeldItem().getType());
 		
 	}
 	

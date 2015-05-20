@@ -13,7 +13,8 @@ public class WateringCan implements Item {
 	// --- Constructor ---
 	
 	public WateringCan(int capacity, int range) {
-		this.water = 5;
+		//supposed to be 5
+		this.water = 150;
 		this.range = range;
 	}
 	

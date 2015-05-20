@@ -73,6 +73,7 @@ public abstract class Crop extends TileType implements ITileDayUpdate {
 					daysInCycle = 0;
 					++currCycle;
 					data = TileInfo.setFGSpriteID(data, getSpriteForCycle(currCycle));
+					data = TileInfo.setDensity(data, true);
 				}
 				
 				isWatered = 0;

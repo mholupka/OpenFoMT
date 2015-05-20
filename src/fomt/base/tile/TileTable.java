@@ -38,6 +38,7 @@ public class TileTable {
 		null,					// 24
 		null,					// 25
 		null,					// 26
+		new MultiCatGrass(),	// 27
 		
 	};
 
