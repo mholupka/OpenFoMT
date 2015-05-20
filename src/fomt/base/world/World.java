@@ -27,6 +27,14 @@ public class World implements Serializable {
 	
 	// --- Instance Methods ---
 	
+	public void setID(int id) {
+		this.id = id;
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
 	public void forEachTile(Consumer<TileInfo> lambda) {
 		
 		TileInfo info = new TileInfo(0, 0, 0);
@@ -132,10 +140,10 @@ public class World implements Serializable {
 	
 	// --- Instance Fields ---
 	
+	protected int id;
 	protected String name;
 	
 	protected long[] tileData;
-	
 	protected int width, height;
 	
 	Map<Long, ITileDayUpdate> bgDayUpdateList;

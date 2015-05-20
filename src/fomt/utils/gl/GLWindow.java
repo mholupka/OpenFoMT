@@ -91,11 +91,9 @@ public abstract class GLWindow {
 
 			i = 0;
 			while ((t2 = (t = Sys.getTime() * 1000L / Sys.getTimerResolution()) - lastTick) > period && i < 5) {
-				
 				onTick();
 				lastTick = t;
 				++i;
-				
 			}
 			
 			f = (float)t2 / (float)period;
