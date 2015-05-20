@@ -472,15 +472,15 @@ public class GameWindow extends GLWindow {
 		long tile = world.getTileData(mouseRow, mouseCol);
 		TrueTypeFont font = this.font;
 		
-		//font.drawString(5f, y, "BG Sprite ID: " + TileInfo.getBGSpriteID(tile));
+		font.drawString(5f, y, "BG Sprite ID: " + TileInfo.getBGSpriteID(tile));
 		y += 5 + font.getHeight();
-		//font.drawString(5f, y, "FG Sprite ID: " + TileInfo.getFGSpriteID(tile));
+		font.drawString(5f, y, "FG Sprite ID: " + TileInfo.getFGSpriteID(tile));
 		y += 5 + font.getHeight();
-		//font.drawString(5f, y, "Density: " + TileInfo.isDense(tile));
+		font.drawString(5f, y, "Density: " + TileInfo.isDense(tile));
 		y += 5 + font.getHeight();
-		//font.drawString(5f, y, "Metadata: 0x" + Integer.toHexString(TileInfo.getMetaData(tile)));
+		font.drawString(5f, y, "Metadata: 0x" + Integer.toHexString(TileInfo.getMetaData(tile)));
 		y += 10 + font.getHeight();
-		//font.drawString(5f, y, "HeldItem: " + mob.getHeldItem().getType());
+		font.drawString(5f, y, "HeldItem: " + mob.getHeldItem().getType());
 		
 	}
 	
