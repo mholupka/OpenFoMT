@@ -21,10 +21,6 @@ import fomt.base.input.InputManager;
 import fomt.base.item.types.Hoe;
 import fomt.base.item.types.Seeds;
 import fomt.base.item.types.WateringCan;
-import fomt.base.message.MessageHandler;
-import fomt.base.message.types.MsgPlayerUseItem;
-import fomt.base.message.types.MsgTilePutDown;
-import fomt.base.message.types.MsgWorldCreated;
 import fomt.base.mob.BasicPhysics;
 import fomt.base.mob.Mob;
 import fomt.base.mob.PlayerController;
@@ -47,25 +43,8 @@ public class GameWindow extends GLWindow {
 	public GameWindow(String title, int width, int height) {
 		super(title, width, height);
 	
-		scheduler = new GenericScheduler();
-		
-		msgHandler = new MessageHandler();
-		registerMessages();
-		
-		gameManager = new ServerManager();
-		gameManager.setup();
-		
 	}
 
-	private void registerMessages() {
-		
-		msgHandler.register(MsgPlayerUseItem.class);
-		msgHandler.register(MsgTilePutDown.class);
-		msgHandler.register(MsgWorldCreated.class);
-		// add more...
-	
-	}
-	
 	Mob mob;
 	
 	public void postSetup()
@@ -251,11 +230,6 @@ public class GameWindow extends GLWindow {
 	
 	public void onTick() 
 	{
-		++tick;
-		
-		// new
-		gameManager.onTick(tick);
-		
 		clock.updateTime();
 		worldRenderer.onTick();
 		
@@ -527,10 +501,5 @@ public class GameWindow extends GLWindow {
 	TrueTypeFont font, font16;
 	private int mouseRow, mouseCol;
 	private int gameSpriteSelection;
-	
-	private long tick;
-	private GenericScheduler scheduler;
-	private IGameManager gameManager;
-	private MessageHandler msgHandler;
 	
 }
