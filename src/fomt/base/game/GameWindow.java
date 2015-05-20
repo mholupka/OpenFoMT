@@ -113,6 +113,8 @@ public class GameWindow extends GLWindow {
 			}
 			else
 			{
+				/*
+				//THIS IS FOR TESTING FLOWER GARDENS. I DON'T THINK I NEED IT BUT I'LL LEAVE IT FOR NOW
 				TileType tTy;
 				Random rand = new Random();
 				int a = rand.nextInt(1000);
@@ -136,6 +138,7 @@ public class GameWindow extends GLWindow {
 					tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
 					tTy.onPutDown(world, r, c);
 				}
+				*/
 				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 13));
 			}
 			

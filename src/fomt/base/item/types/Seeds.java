@@ -16,7 +16,7 @@ public class Seeds implements Item {
 	// --- Constructor ---
 	
 	public Seeds(int type) {
-		this.range = 3;
+		this.range = 1;
 	}
 	
 	// --- Instance Methods ---
@@ -47,7 +47,7 @@ public class Seeds implements Item {
 				long data;
 					
 				// if a tilled earth tile
-				if (bgSpriteID != 13)
+				if (bgSpriteID != 13 && bgSpriteID != 26)
 					continue;
 				
 				if (fgSpriteID == 0) {
@@ -55,25 +55,50 @@ public class Seeds implements Item {
 					if(this.type == 0) {
 						Random r = new Random();
 						int a = r.nextInt(1000);
+						
 						if(a <= 500){
 							data = TileInfo.setFGSpriteID(w.getTileData(i, j), 17);
 							tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
 							tTy.onPutDown(w, i, j);
+							if (bgSpriteID == 26)
+							{
+								w.getTileData(i, j, tile);
+								Crop.setWatered(tile, true);
+								w.setTileData(tile);
+							}
 						}
 						else if(a <= 800){
 							data = TileInfo.setFGSpriteID(w.getTileData(i, j), 18);
 							tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
 							tTy.onPutDown(w, i, j);
+							if (bgSpriteID == 26)
+							{
+								w.getTileData(i, j, tile);
+								Crop.setWatered(tile, true);
+								w.setTileData(tile);
+							}
 						}
 						else if(a <= 998){
 							data = TileInfo.setFGSpriteID(w.getTileData(i, j), 19);
 							tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
 							tTy.onPutDown(w, i, j);
+							if (bgSpriteID == 26)
+							{
+								w.getTileData(i, j, tile);
+								Crop.setWatered(tile, true);
+								w.setTileData(tile);
+							}
 						}
 						else{
 							data = TileInfo.setFGSpriteID(w.getTileData(i, j), 27);
 							tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
 							tTy.onPutDown(w, i, j);
+							if (bgSpriteID == 26)
+							{
+								w.getTileData(i, j, tile);
+								Crop.setWatered(tile, true);
+								w.setTileData(tile);
+							}
 						}
 					}
 				}

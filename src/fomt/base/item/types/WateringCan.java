@@ -13,8 +13,7 @@ public class WateringCan implements Item {
 	// --- Constructor ---
 	
 	public WateringCan(int capacity, int range) {
-		//supposed to be 5
-		this.water = 150;
+		this.water = 5;
 		this.range = range;
 	}
 	
@@ -53,8 +52,8 @@ public class WateringCan implements Item {
 				if ((fgSpriteID == 14 || fgSpriteID == 15 || fgSpriteID == 16) && !(tileType instanceof Crop))
 					Crop.setWatered(tile, true);
 				
+				//NEED TO UNWATER EMPTY PLOTS
 				tile.setBGSpriteID(26);
-				
 				w.setTileData(tile);
 				
 			}
