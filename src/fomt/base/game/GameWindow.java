@@ -113,33 +113,7 @@ public class GameWindow extends GLWindow {
 			}
 			else
 			{
-				/*
-				//THIS IS FOR TESTING FLOWER GARDENS. I DON'T THINK I NEED IT BUT I'LL LEAVE IT FOR NOW
-				TileType tTy;
-				Random rand = new Random();
-				int a = rand.nextInt(1000);
-				if(a <= 500){
-					data = TileInfo.setFGSpriteID(world.getTileData(r, c), 17);
-					tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
-					tTy.onPutDown(world, r, c);
-				}
-				else if(a <= 800){
-					data = TileInfo.setFGSpriteID(world.getTileData(r, c), 18);
-					tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
-					tTy.onPutDown(world, r, c);
-				}
-				else if(a <= 998){
-					data = TileInfo.setFGSpriteID(world.getTileData(r, c), 19);
-					tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
-					tTy.onPutDown(world, r, c);
-				}
-				else{
-					data = TileInfo.setFGSpriteID(world.getTileData(r, c), 27);
-					tTy = TileTable.getTileType(TileInfo.getFGSpriteID(data));
-					tTy.onPutDown(world, r, c);
-				}
-				*/
-				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 13));
+				world.setTileData(r, c, TileInfo.setBGSpriteID(data, 2));
 			}
 			
 			data = world.getTileData(r, c);
